@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.distribute";
+option java_outer_classname = "DConcurrent";
+option objc_class_prefix = "LZZ";
+
+package dconcurrent;
+
+service DConcurrentServer {
+  rpc PrintList(DListString) returns (DListString) {}
+  rpc addList(DString) returns (DListString) {}
+  rpc getList(DString) returns (DListString) {}
+  rpc Run(DObject) returns(DObject) {}
+  rpc Call(DObject) returns(DObject) {}
+}
+
+message DListString {
+  repeated string message = 1;
+}
+
+message DString {
+   string message = 2;
+}
+
+
+message DObject{
+  google.protobuf.Any message = 3;
+}
