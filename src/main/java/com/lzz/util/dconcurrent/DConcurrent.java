@@ -98,7 +98,6 @@ public class DConcurrent {
 
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        List l = new ArrayList();
 
         DConcurrent client = new DConcurrent("127.0.0.1",50052);
         List<String> arr = new ArrayList<String>();
@@ -107,11 +106,17 @@ public class DConcurrent {
         }
         client.greet( arr );
 
+        client.addList(l, "aaa");
+        client.addList(l, "aaabb");
+
         client.submit(new Runnable() {
             public void run() {
+                // while client.getMap(metaMap) == true
                 System.out.println( "zzz");
             }
         });
+
+        client.submit( new PrintList() );
 
         FutureTask futureTask = client.submit(new Callable<String>() {
             public String call() throws Exception {
@@ -122,10 +127,16 @@ public class DConcurrent {
 
         System.out.println( futureTask.get() );
 
-        client.addList(l, "aaa");
-        client.addList(l, "aaabb");
-        System.out.println( client.getList(l) );
+
     }
 
+    public static class PrintList implements Runnable{
+        private DConcurrent client = new DConcurrent("127.0.0.1",50052);
+        public PrintList(){
 
+        }
+        public void run() {
+            System.out.println( client.getList(l) );
+        }
+    }
 }
