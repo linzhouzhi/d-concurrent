@@ -11,8 +11,8 @@ import io.grpc.distribute.DListString;
 import io.grpc.distribute.DObject;
 import io.grpc.distribute.DString;
 import io.grpc.stub.StreamObserver;
-
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,22 +76,31 @@ public class DConcurrentServer {
             responseObserver.onCompleted();
         }
 
+        @Override
         public void run(DObject request, StreamObserver<DObject> responseObserver){
             final Any classNameObj = request.getMessage();
-            try {
-                Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
-                Object object = class1.newInstance();
-                Method runMethod = class1.getDeclaredMethod( "run" );
-                runMethod.setAccessible( true );
-                runMethod.invoke( object ) ;
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
+                        Object object = class1.newInstance();
+                        Method runMethod = class1.getDeclaredMethod( "run" );
+                        runMethod.setAccessible( true );
+                        runMethod.invoke( object ) ;
+                        Thread.sleep(4000);
+                        System.out.println(4000);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
             DObject reply = DObject.newBuilder().setMessage( classNameObj ).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();
         }
 
+        @Override
         public void call(DObject request, StreamObserver<DObject> responseObserver){
             Any classNameObj = request.getMessage();
             String result = null;
@@ -110,18 +119,52 @@ public class DConcurrentServer {
             responseObserver.onCompleted();
         }
 
+        @Override
         public void addList(DString request, StreamObserver<DListString> responseObserver){
             String requestStr = request.getMessage();
             Gson gson = new Gson();
-            JsonObject requestJson = gson.fromJson(requestStr, JsonObject.class);
-            String listName = requestJson.get("listName").getAsString();
-            System.out.println( listName );
+            try {
+                JsonObject requestJson = gson.fromJson(requestStr, JsonObject.class);
+                String className = requestJson.get("className").getAsString();
+                String listName = requestJson.get("listName").getAsString();
+                String element = requestJson.get("element").getAsString();
+                Class<?> class1 = Class.forName( className );
+                Field field = class1.getDeclaredField( listName );
+                field.setAccessible(true);
+                List<String> list = (List<String>) field.get(class1);
+                list.add( element );
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             List l = new ArrayList();
-            l.add( listName );
+            l.add( "dddd" );
             DListString reply = DListString.newBuilder().addAllMessage( l ).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
         }
+
+        @Override
+        public void getList(DString request, StreamObserver<DListString> responseObserver){
+            String requestStr = request.getMessage();
+            Gson gson = new Gson();
+            List<String> list = new ArrayList<String>();
+            try {
+                JsonObject requestJson = gson.fromJson(requestStr, JsonObject.class);
+                String className = requestJson.get("className").getAsString();
+                String listName = requestJson.get("listName").getAsString();
+                Class<?> class1 = Class.forName( className );
+                Field field = class1.getDeclaredField( listName );
+                field.setAccessible(true);
+                list = (List<String>) field.get(class1);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            DListString reply = DListString.newBuilder().addAllMessage( list ).build();
+            responseObserver.onNext(reply);
+            responseObserver.onCompleted();
+        }
     }
+
 
 }

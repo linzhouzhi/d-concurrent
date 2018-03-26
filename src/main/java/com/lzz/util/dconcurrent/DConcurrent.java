@@ -21,7 +21,9 @@ import java.util.concurrent.TimeUnit;
  * Created by lzz on 2018/3/26.
  */
 public class DConcurrent {
-    List l = new ArrayList();
+    //  用注解来找名称
+    static List l = new ArrayList();
+
     private final ManagedChannel channel;
     private final DConcurrentServerGrpc.DConcurrentServerBlockingStub blockingStub;
 
@@ -60,26 +62,32 @@ public class DConcurrent {
     }
 
     // 可以返回自定义多 thread 然后增加 isrun 属性，来控制线程的开关闭合
-    public Thread submit(final Runnable runnable){
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                Class<?> className = runnable.getClass();
-                Any.Builder any = Any.newBuilder().setValue(ByteString.copyFromUtf8( className.getName() ));
-                DObject request = DObject.newBuilder().setMessage( any ).build();
-                DObject response = blockingStub.run(request);
-                System.out.println(response.getMessage());
-            }
-        });
-        thread.start();
-        return thread;
+    public void submit(final Runnable runnable){
+        Class<?> className = runnable.getClass();
+        Any.Builder any = Any.newBuilder().setValue(ByteString.copyFromUtf8( className.getName() ));
+        DObject request = DObject.newBuilder().setMessage( any ).build();
+        DObject response = blockingStub.run(request);
+        System.out.println(response.getMessage());
     }
 
-    private void addList(List l, String aaa) {
+    private void addList(List l, String element) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("listName", l.getClass().getName());
+        jsonObject.addProperty("className", this.getClass().getName());
+        jsonObject.addProperty("listName", "l");
+        jsonObject.addProperty("element", element);
         DString request = DString.newBuilder().setMessage( jsonObject.toString() ).build();
         DListString response = blockingStub.addList( request );
         System.out.println( response.getMessageList() );
+    }
+
+    private List<String> getList(List l) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("className", this.getClass().getName());
+        jsonObject.addProperty("listName", "l");
+        DString request = DString.newBuilder().setMessage( jsonObject.toString() ).build();
+        DListString response = blockingStub.getList( request );
+        List<String> res = response.getMessageList();
+        return res;
     }
 
     public  void greet(List<String> nameList){
@@ -115,7 +123,8 @@ public class DConcurrent {
         System.out.println( futureTask.get() );
 
         client.addList(l, "aaa");
-
+        client.addList(l, "aaabb");
+        System.out.println( client.getList(l) );
     }
 
 
