@@ -29,6 +29,6 @@ public class TestAnnotation {
         Field fieldP = claz.getDeclaredField("name");
         FieldMeta meta = fieldP.getAnnotation(FieldMeta.class);
         System.out.println( meta.name());
-        
+
     }
 }
