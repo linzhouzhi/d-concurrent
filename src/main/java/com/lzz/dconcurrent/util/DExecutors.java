@@ -23,6 +23,11 @@ public class DExecutors {
         dclient().submit(runnable);
     }
 
+    public void submit(final DRuannable runnable){
+        runnable.run();
+        //dclient().submit(runnable);
+    }
+
     private static DConcurrentClient dclient(){
         return clients.get(0);
     }

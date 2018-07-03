@@ -1,4 +1,8 @@
-package com.lzz.dconcurrent.util;
+package com.lzz.dconcurrent.util.demo;
+
+import com.lzz.dconcurrent.util.DConcurrentServer;
+import com.lzz.dconcurrent.util.DExecutors;
+import com.lzz.dconcurrent.util.DRuannable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +24,10 @@ public class DConcurrentTest {
             arr.add( "world:"+i );
         }
         Integer count = 1000;
-        /*
-        client.submit(new Runnable() {
-            public void run() {
-                System.out.println( "zzz");
-            }
-        });
-        */
-        client.submit(new RunnableTest(count) );
+
+        client.submit(new TestRuannable("mmmmfdsa"));
+
+        //client.submit(new RunnableTest(count) );
 
         Future futureTask = client.submit(new Callable<byte[]>() {
             public byte[] call() throws Exception {
@@ -46,5 +46,15 @@ public class DConcurrentTest {
         System.out.println( res.size() + "----" );
         String str = new String(resultByte);
         System.out.println( str );
+    }
+
+    public static class TestRuannable extends DRuannable {
+        public TestRuannable(String meta){
+            this.meta = meta;
+        }
+        @Override
+        protected void run() {
+            System.out.println("drunnable " + this.meta);
+        }
     }
 }

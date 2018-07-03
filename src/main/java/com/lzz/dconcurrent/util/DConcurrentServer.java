@@ -81,6 +81,7 @@ public class DConcurrentServer {
                     try {
                         Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
                         System.out.println( class1 + "--ccc");
+
                         Object object = class1.newInstance();
                         Method runMethod = class1.getDeclaredMethod( "run" );
                         runMethod.setAccessible( true );
