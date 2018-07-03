@@ -1,4 +1,4 @@
-package com.lzz.util.dconcurrent;
+package com.lzz.dconcurrent;
 
 import java.util.concurrent.Callable;
 

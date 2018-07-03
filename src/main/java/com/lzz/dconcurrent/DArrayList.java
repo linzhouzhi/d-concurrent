@@ -1,4 +1,4 @@
-package com.lzz.util.dconcurrent;
+package com.lzz.dconcurrent;
 
 /**
  * Created by lzz on 2018/3/26.
