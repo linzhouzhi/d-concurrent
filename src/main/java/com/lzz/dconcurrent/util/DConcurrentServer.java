@@ -7,11 +7,13 @@ import io.grpc.ServerBuilder;
 import io.grpc.distribute.DConcurrentServerGrpc;
 import io.grpc.distribute.DObject;
 import io.grpc.stub.StreamObserver;
+
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by lzz on 2018/3/26.
@@ -78,12 +80,13 @@ public class DConcurrentServer {
                 public void run() {
                     try {
                         Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
+                        System.out.println( class1 + "--ccc");
                         Object object = class1.newInstance();
                         Method runMethod = class1.getDeclaredMethod( "run" );
                         runMethod.setAccessible( true );
                         runMethod.invoke( object ) ;
                     }catch (Exception e){
-
+                        e.printStackTrace();
                     }
 
                 }
@@ -95,19 +98,27 @@ public class DConcurrentServer {
 
         @Override
         public void call(DObject request, StreamObserver<DObject> responseObserver){
-            Any classNameObj = request.getMessage();
-            byte[] result = null;
+            final Any classNameObj = request.getMessage();
+            Future<byte[]> future = threadPool.submit(new Callable<byte[]>() {
+                @Override
+                public byte[] call() throws Exception {
+                    byte[] result = null;
+                    Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
+                    Object object = class1.newInstance();
+                    Method runMethod = class1.getDeclaredMethod( "call" );
+                    runMethod.setAccessible( true );
+                    result = (byte[]) runMethod.invoke( object );
+                    return result;
+                }
+            });
+            byte[] futureRes = new byte[0];
             try {
-                Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
-                Object object = class1.newInstance();
-                Method runMethod = class1.getDeclaredMethod( "call" );
-                runMethod.setAccessible( true );
-                result = (byte[]) runMethod.invoke( object );
-            }catch (Exception e){
-                
+                futureRes = future.get();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            Any resultAny = Any.newBuilder().setValue( ByteString.copyFrom(result) ).build();
+            Any resultAny = Any.newBuilder().setValue( ByteString.copyFrom( futureRes ) ).build();
             DObject reply = DObject.newBuilder().setMessage( resultAny ).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();

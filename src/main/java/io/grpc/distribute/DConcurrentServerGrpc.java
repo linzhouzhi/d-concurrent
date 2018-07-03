@@ -18,8 +18,8 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 /**
  */
 @javax.annotation.Generated(
-        value = "by gRPC proto compiler (version 1.10.0)",
-        comments = "Source: d-concurrent.proto")
+    value = "by gRPC proto compiler (version 1.10.0)",
+    comments = "Source: d-concurrent.proto")
 public final class DConcurrentServerGrpc {
 
   private DConcurrentServerGrpc() {}
@@ -28,78 +28,78 @@ public final class DConcurrentServerGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @java.lang.Deprecated // Use {@link #getRunMethod()} instead.
+  @java.lang.Deprecated // Use {@link #getRunMethod()} instead. 
   public static final io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> METHOD_RUN = getRunMethodHelper();
+      io.grpc.distribute.DObject> METHOD_RUN = getRunMethodHelper();
 
   private static volatile io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> getRunMethod;
+      io.grpc.distribute.DObject> getRunMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> getRunMethod() {
+      io.grpc.distribute.DObject> getRunMethod() {
     return getRunMethodHelper();
   }
 
   private static io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> getRunMethodHelper() {
+      io.grpc.distribute.DObject> getRunMethodHelper() {
     io.grpc.MethodDescriptor<io.grpc.distribute.DObject, io.grpc.distribute.DObject> getRunMethod;
     if ((getRunMethod = DConcurrentServerGrpc.getRunMethod) == null) {
       synchronized (DConcurrentServerGrpc.class) {
         if ((getRunMethod = DConcurrentServerGrpc.getRunMethod) == null) {
-          DConcurrentServerGrpc.getRunMethod = getRunMethod =
-                  io.grpc.MethodDescriptor.<io.grpc.distribute.DObject, io.grpc.distribute.DObject>newBuilder()
-                          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-                          .setFullMethodName(generateFullMethodName(
-                                  "dconcurrent.DConcurrentServer", "Run"))
-                          .setSampledToLocalTracing(true)
-                          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                                  io.grpc.distribute.DObject.getDefaultInstance()))
-                          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                                  io.grpc.distribute.DObject.getDefaultInstance()))
-                          .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("Run"))
-                          .build();
+          DConcurrentServerGrpc.getRunMethod = getRunMethod = 
+              io.grpc.MethodDescriptor.<io.grpc.distribute.DObject, io.grpc.distribute.DObject>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "dconcurrent.DConcurrentServer", "Run"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.distribute.DObject.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.distribute.DObject.getDefaultInstance()))
+                  .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("Run"))
+                  .build();
+          }
         }
-      }
-    }
-    return getRunMethod;
+     }
+     return getRunMethod;
   }
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @java.lang.Deprecated // Use {@link #getCallMethod()} instead.
+  @java.lang.Deprecated // Use {@link #getCallMethod()} instead. 
   public static final io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> METHOD_CALL = getCallMethodHelper();
+      io.grpc.distribute.DObject> METHOD_CALL = getCallMethodHelper();
 
   private static volatile io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> getCallMethod;
+      io.grpc.distribute.DObject> getCallMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> getCallMethod() {
+      io.grpc.distribute.DObject> getCallMethod() {
     return getCallMethodHelper();
   }
 
   private static io.grpc.MethodDescriptor<io.grpc.distribute.DObject,
-          io.grpc.distribute.DObject> getCallMethodHelper() {
+      io.grpc.distribute.DObject> getCallMethodHelper() {
     io.grpc.MethodDescriptor<io.grpc.distribute.DObject, io.grpc.distribute.DObject> getCallMethod;
     if ((getCallMethod = DConcurrentServerGrpc.getCallMethod) == null) {
       synchronized (DConcurrentServerGrpc.class) {
         if ((getCallMethod = DConcurrentServerGrpc.getCallMethod) == null) {
-          DConcurrentServerGrpc.getCallMethod = getCallMethod =
-                  io.grpc.MethodDescriptor.<io.grpc.distribute.DObject, io.grpc.distribute.DObject>newBuilder()
-                          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-                          .setFullMethodName(generateFullMethodName(
-                                  "dconcurrent.DConcurrentServer", "Call"))
-                          .setSampledToLocalTracing(true)
-                          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                                  io.grpc.distribute.DObject.getDefaultInstance()))
-                          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                                  io.grpc.distribute.DObject.getDefaultInstance()))
-                          .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("Call"))
-                          .build();
+          DConcurrentServerGrpc.getCallMethod = getCallMethod = 
+              io.grpc.MethodDescriptor.<io.grpc.distribute.DObject, io.grpc.distribute.DObject>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "dconcurrent.DConcurrentServer", "Call"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.distribute.DObject.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.grpc.distribute.DObject.getDefaultInstance()))
+                  .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("Call"))
+                  .build();
+          }
         }
-      }
-    }
-    return getCallMethod;
+     }
+     return getCallMethod;
   }
 
   /**
@@ -113,7 +113,7 @@ public final class DConcurrentServerGrpc {
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
   public static DConcurrentServerBlockingStub newBlockingStub(
-          io.grpc.Channel channel) {
+      io.grpc.Channel channel) {
     return new DConcurrentServerBlockingStub(channel);
   }
 
@@ -121,7 +121,7 @@ public final class DConcurrentServerGrpc {
    * Creates a new ListenableFuture-style stub that supports unary calls on the service
    */
   public static DConcurrentServerFutureStub newFutureStub(
-          io.grpc.Channel channel) {
+      io.grpc.Channel channel) {
     return new DConcurrentServerFutureStub(channel);
   }
 
@@ -132,34 +132,34 @@ public final class DConcurrentServerGrpc {
     /**
      */
     public void run(io.grpc.distribute.DObject request,
-                    io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
+        io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
       asyncUnimplementedUnaryCall(getRunMethodHelper(), responseObserver);
     }
 
     /**
      */
     public void call(io.grpc.distribute.DObject request,
-                     io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
+        io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
       asyncUnimplementedUnaryCall(getCallMethodHelper(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-              .addMethod(
-                      getRunMethodHelper(),
-                      asyncUnaryCall(
-                              new MethodHandlers<
-                                      io.grpc.distribute.DObject,
-                                      io.grpc.distribute.DObject>(
-                                      this, METHODID_RUN)))
-              .addMethod(
-                      getCallMethodHelper(),
-                      asyncUnaryCall(
-                              new MethodHandlers<
-                                      io.grpc.distribute.DObject,
-                                      io.grpc.distribute.DObject>(
-                                      this, METHODID_CALL)))
-              .build();
+          .addMethod(
+            getRunMethodHelper(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                io.grpc.distribute.DObject,
+                io.grpc.distribute.DObject>(
+                  this, METHODID_RUN)))
+          .addMethod(
+            getCallMethodHelper(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                io.grpc.distribute.DObject,
+                io.grpc.distribute.DObject>(
+                  this, METHODID_CALL)))
+          .build();
     }
   }
 
@@ -171,30 +171,30 @@ public final class DConcurrentServerGrpc {
     }
 
     private DConcurrentServerStub(io.grpc.Channel channel,
-                                  io.grpc.CallOptions callOptions) {
+        io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
     protected DConcurrentServerStub build(io.grpc.Channel channel,
-                                          io.grpc.CallOptions callOptions) {
+        io.grpc.CallOptions callOptions) {
       return new DConcurrentServerStub(channel, callOptions);
     }
 
     /**
      */
     public void run(io.grpc.distribute.DObject request,
-                    io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
+        io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
       asyncUnaryCall(
-              getChannel().newCall(getRunMethodHelper(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getRunMethodHelper(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
     public void call(io.grpc.distribute.DObject request,
-                     io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
+        io.grpc.stub.StreamObserver<io.grpc.distribute.DObject> responseObserver) {
       asyncUnaryCall(
-              getChannel().newCall(getCallMethodHelper(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getCallMethodHelper(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -206,13 +206,13 @@ public final class DConcurrentServerGrpc {
     }
 
     private DConcurrentServerBlockingStub(io.grpc.Channel channel,
-                                          io.grpc.CallOptions callOptions) {
+        io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
     protected DConcurrentServerBlockingStub build(io.grpc.Channel channel,
-                                                  io.grpc.CallOptions callOptions) {
+        io.grpc.CallOptions callOptions) {
       return new DConcurrentServerBlockingStub(channel, callOptions);
     }
 
@@ -220,14 +220,14 @@ public final class DConcurrentServerGrpc {
      */
     public io.grpc.distribute.DObject run(io.grpc.distribute.DObject request) {
       return blockingUnaryCall(
-              getChannel(), getRunMethodHelper(), getCallOptions(), request);
+          getChannel(), getRunMethodHelper(), getCallOptions(), request);
     }
 
     /**
      */
     public io.grpc.distribute.DObject call(io.grpc.distribute.DObject request) {
       return blockingUnaryCall(
-              getChannel(), getCallMethodHelper(), getCallOptions(), request);
+          getChannel(), getCallMethodHelper(), getCallOptions(), request);
     }
   }
 
@@ -239,30 +239,30 @@ public final class DConcurrentServerGrpc {
     }
 
     private DConcurrentServerFutureStub(io.grpc.Channel channel,
-                                        io.grpc.CallOptions callOptions) {
+        io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
     }
 
     @java.lang.Override
     protected DConcurrentServerFutureStub build(io.grpc.Channel channel,
-                                                io.grpc.CallOptions callOptions) {
+        io.grpc.CallOptions callOptions) {
       return new DConcurrentServerFutureStub(channel, callOptions);
     }
 
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<io.grpc.distribute.DObject> run(
-            io.grpc.distribute.DObject request) {
+        io.grpc.distribute.DObject request) {
       return futureUnaryCall(
-              getChannel().newCall(getRunMethodHelper(), getCallOptions()), request);
+          getChannel().newCall(getRunMethodHelper(), getCallOptions()), request);
     }
 
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<io.grpc.distribute.DObject> call(
-            io.grpc.distribute.DObject request) {
+        io.grpc.distribute.DObject request) {
       return futureUnaryCall(
-              getChannel().newCall(getCallMethodHelper(), getCallOptions()), request);
+          getChannel().newCall(getCallMethodHelper(), getCallOptions()), request);
     }
   }
 
@@ -270,10 +270,10 @@ public final class DConcurrentServerGrpc {
   private static final int METHODID_CALL = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
-          io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
-          io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
-          io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
-          io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
+      io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
     private final DConcurrentServerImplBase serviceImpl;
     private final int methodId;
 
@@ -288,11 +288,11 @@ public final class DConcurrentServerGrpc {
       switch (methodId) {
         case METHODID_RUN:
           serviceImpl.run((io.grpc.distribute.DObject) request,
-                  (io.grpc.stub.StreamObserver<io.grpc.distribute.DObject>) responseObserver);
+              (io.grpc.stub.StreamObserver<io.grpc.distribute.DObject>) responseObserver);
           break;
         case METHODID_CALL:
           serviceImpl.call((io.grpc.distribute.DObject) request,
-                  (io.grpc.stub.StreamObserver<io.grpc.distribute.DObject>) responseObserver);
+              (io.grpc.stub.StreamObserver<io.grpc.distribute.DObject>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -302,7 +302,7 @@ public final class DConcurrentServerGrpc {
     @java.lang.Override
     @java.lang.SuppressWarnings("unchecked")
     public io.grpc.stub.StreamObserver<Req> invoke(
-            io.grpc.stub.StreamObserver<Resp> responseObserver) {
+        io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         default:
           throw new AssertionError();
@@ -311,7 +311,7 @@ public final class DConcurrentServerGrpc {
   }
 
   private static abstract class DConcurrentServerBaseDescriptorSupplier
-          implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     DConcurrentServerBaseDescriptorSupplier() {}
 
     @java.lang.Override
@@ -326,13 +326,13 @@ public final class DConcurrentServerGrpc {
   }
 
   private static final class DConcurrentServerFileDescriptorSupplier
-          extends DConcurrentServerBaseDescriptorSupplier {
+      extends DConcurrentServerBaseDescriptorSupplier {
     DConcurrentServerFileDescriptorSupplier() {}
   }
 
   private static final class DConcurrentServerMethodDescriptorSupplier
-          extends DConcurrentServerBaseDescriptorSupplier
-          implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+      extends DConcurrentServerBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
     private final String methodName;
 
     DConcurrentServerMethodDescriptorSupplier(String methodName) {
@@ -354,10 +354,10 @@ public final class DConcurrentServerGrpc {
         result = serviceDescriptor;
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
-                  .setSchemaDescriptor(new DConcurrentServerFileDescriptorSupplier())
-                  .addMethod(getRunMethodHelper())
-                  .addMethod(getCallMethodHelper())
-                  .build();
+              .setSchemaDescriptor(new DConcurrentServerFileDescriptorSupplier())
+              .addMethod(getRunMethodHelper())
+              .addMethod(getCallMethodHelper())
+              .build();
         }
       }
     }

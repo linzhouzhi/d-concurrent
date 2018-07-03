@@ -27,7 +27,7 @@ public final class DConcurrent {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    String[] descriptorData = {
+    java.lang.String[] descriptorData = {
       "\n\022d-concurrent.proto\022\013dconcurrent\032\031googl" +
       "e/protobuf/any.proto\"0\n\007DObject\022%\n\007messa" +
       "ge\030\003 \001(\0132\024.google.protobuf.Any2~\n\021DConcu" +
@@ -55,7 +55,7 @@ public final class DConcurrent {
     internal_static_dconcurrent_DObject_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dconcurrent_DObject_descriptor,
-        new String[] { "Message", });
+        new java.lang.String[] { "Message", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

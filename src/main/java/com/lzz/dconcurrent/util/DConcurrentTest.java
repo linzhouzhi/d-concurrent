@@ -1,34 +1,35 @@
 package com.lzz.dconcurrent.util;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.Future;
 
 /**
  * Created by lzz on 2018/3/26.
  */
-public class DConcurrent {
+public class DConcurrentTest {
     public static List<String> res = new ArrayList<String>();
     public static void main(String[] args) throws InterruptedException, ExecutionException {
+        DConcurrentServer.daemonStart();
 
-        DConcurrentClient client = new DConcurrentClient("127.0.0.1",50052);
+        DExecutors client = new DExecutors();
         List<String> arr = new ArrayList<String>();
         for(int i=0;i<5;i++){
             arr.add( "world:"+i );
         }
-
+        Integer count = 1000;
+        /*
         client.submit(new Runnable() {
             public void run() {
                 System.out.println( "zzz");
             }
         });
+        */
+        client.submit(new RunnableTest(count) );
 
-
-        FutureTask futureTask = client.submit(new Callable<byte[]>() {
+        Future futureTask = client.submit(new Callable<byte[]>() {
             public byte[] call() throws Exception {
                 Thread.sleep(1000);
                 res.add("fdasfdas");
@@ -36,6 +37,8 @@ public class DConcurrent {
                 return new String("aa bb cc").getBytes();
             }
         });
+
+
 
 
         System.out.println( res.size() + "----" );
