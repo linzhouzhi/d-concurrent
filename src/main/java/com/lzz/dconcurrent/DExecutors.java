@@ -4,9 +4,9 @@ import com.lzz.dconcurrent.util.HostAndPort;
 import com.lzz.dconcurrent.util.NetUtil;
 
 import java.lang.reflect.Field;
-import java.net.UnknownHostException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Future;
 
 /**
@@ -26,42 +26,37 @@ public class DExecutors {
         byte[] className = callable.getClass().getName().getBytes();
         Class classObj = callable.getClass();
         Field[] fields = classObj.getDeclaredFields();
-        DmetaParam dmetaParam = null;
-        for(Field field : fields){
-            if( DmetaParam.class == field.getType().getSuperclass() ){
-                System.out.println( field );
-                try {
-                    field.setAccessible(true);
-                    dmetaParam = (DmetaParam) field.get( callable );
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        DmetaParam dmetaParam = getDmetaParam(fields, callable);
         byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
         byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
         return dclient().call(className, metaParam, metaParamClass);
     }
 
+
     public void submit(final DRuannable runnable){
         byte[] className = runnable.getClass().getName().getBytes();
         Class classObj = runnable.getClass();
         Field[] fields = classObj.getDeclaredFields();
+        DmetaParam dmetaParam = getDmetaParam(fields, runnable);
+        byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
+        byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
+        dclient().run( className, metaParam,  metaParamClass);
+    }
+
+    private DmetaParam getDmetaParam(Field[] fields, Object object) {
         DmetaParam dmetaParam = null;
         for(Field field : fields){
             if( DmetaParam.class == field.getType().getSuperclass() ){
                 System.out.println( field );
                 try {
                     field.setAccessible(true);
-                    dmetaParam = (DmetaParam) field.get( runnable );
+                    dmetaParam = (DmetaParam) field.get( object );
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
-        byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
-        byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
-        dclient().run( className, metaParam,  metaParamClass);
+        return dmetaParam;
     }
 
     private DConcurrentClient dclient(){
@@ -92,7 +87,8 @@ public class DExecutors {
                     }
                 }catch (Exception e){}
             }
-            Thread.sleep(2000);
+            // 不是 leader 10 秒后再试，因为有可能是其它节点挂了
+            Thread.sleep(10000);
         }catch (Exception e){
 
         }

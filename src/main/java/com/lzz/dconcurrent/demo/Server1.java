@@ -16,9 +16,9 @@ public class Server1 {
         DConcurrentServer.daemonStart(50051);
 
         List<HostAndPort> hostAndPortList = new ArrayList<HostAndPort>();
-        HostAndPort hostAndPort1 = new HostAndPort("10.16.164.33", 50051);
-        HostAndPort hostAndPort2 = new HostAndPort("10.16.164.33", 50052);
-        HostAndPort hostAndPort3 = new HostAndPort("10.16.164.33", 50053);
+        HostAndPort hostAndPort1 = new HostAndPort("192.168.31.147", 50051);
+        HostAndPort hostAndPort2 = new HostAndPort("192.168.31.147", 50052);
+        HostAndPort hostAndPort3 = new HostAndPort("192.168.31.147", 50053);
         hostAndPortList.add( hostAndPort1 );
         hostAndPortList.add( hostAndPort2 );
         hostAndPortList.add( hostAndPort3 );

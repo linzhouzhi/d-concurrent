@@ -22,6 +22,7 @@ public class DConcurrentClient {
         this.hostAndPort = hostAndPort;
         channel = ManagedChannelBuilder.forAddress(hostAndPort.getIp(), hostAndPort.getPort())
                 .usePlaintext(true)
+                .keepAliveWithoutCalls(true)
                 .build();
         blockingStub = DConcurrentServerGrpc.newBlockingStub( channel );
     }
@@ -37,24 +38,7 @@ public class DConcurrentClient {
     public Future<byte[]> call(final byte[] className, final byte[] metaParam, final byte[] metaParamClass) {
         Future<byte[]> future = threadPool.submit(new Callable<byte[]>() {
             public byte[] call() throws Exception {
-                DObject.Builder builder = DObject.newBuilder();
-                Any.Builder anyClassName;
-                if( className != null ){
-                    anyClassName = Any.newBuilder().setValue( ByteString.copyFrom(className) );
-                    builder.setClassName( anyClassName );
-                }
-                Any.Builder anyMetaParam;
-                if( metaParam != null ){
-                    anyMetaParam = Any.newBuilder().setValue( ByteString.copyFrom(metaParam) );
-                    builder.setMetaParam( anyMetaParam );
-                }
-
-                Any.Builder anyMetaParamClass;
-                if( metaParamClass != null ){
-                    anyMetaParamClass = Any.newBuilder().setValue( ByteString.copyFrom(metaParamClass) );
-                    builder.setMetaParamClass( anyMetaParamClass );
-                }
-                DObject request = builder.build();
+                DObject request = builderRequest(className, metaParam, metaParamClass);
                 DObject response = blockingStub.call(request);
                 return response.getClassName().getValue().toByteArray();
             }
@@ -63,7 +47,17 @@ public class DConcurrentClient {
     }
 
 
-    public void run(byte[] className, byte[] metaParam, byte[] metaParamClass){
+    public void run(final byte[] className, final byte[] metaParam, final byte[] metaParamClass){
+        threadPool.submit(new Runnable() {
+            @Override
+            public void run() {
+                DObject request = builderRequest(className, metaParam, metaParamClass);
+                blockingStub.run(request);
+            }
+        });
+    }
+
+    private DObject builderRequest(byte[] className, byte[] metaParam, byte[] metaParamClass) {
         DObject.Builder builder = DObject.newBuilder();
         Any.Builder anyClassName;
         if( className != null ){
@@ -82,7 +76,8 @@ public class DConcurrentClient {
             builder.setMetaParamClass( anyMetaParamClass );
         }
         DObject request = builder.build();
-        DObject response = blockingStub.run(request);
-        System.out.println(response.getClassName());
+        return request;
     }
+
+
 }

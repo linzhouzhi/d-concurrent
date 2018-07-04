@@ -19,10 +19,4 @@ public class DFuture<T> {
         String resultStr = new String(resultByte);
         return (T) gson.fromJson(resultStr, this.classType);
     }
-
-    public T futureResult(Future futureTask, Class<?> classType) throws ExecutionException, InterruptedException {
-        byte[] resultByte = (byte[]) futureTask.get();
-        String resultStr = new String(resultByte);
-        return (T) gson.fromJson(resultStr, classType);
-    }
 }

@@ -8,13 +8,13 @@ import io.grpc.ServerBuilder;
 import io.grpc.distribute.DConcurrentServerGrpc;
 import io.grpc.distribute.DObject;
 import io.grpc.stub.StreamObserver;
+
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Created by lzz on 2018/3/26.
@@ -84,17 +84,7 @@ public class DConcurrentServer {
                 public void run() {
                     try {
                         Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
-                        Constructor constructorObj = runClass.getConstructor( DmetaParam.class );
-
-                        ByteString paramClassByte = metaParamClass.getValue();
-                        Object runObject;
-                        if( paramClassByte.size() != 0 ){
-                            Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
-                            Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
-                            runObject = constructorObj.newInstance( metaObject );
-                        }else{
-                            runObject = runClass.newInstance();
-                        }
+                        Object runObject = getRunObject(classNameObj, metaParam, metaParamClass);
                         Method runMethod = runClass.getDeclaredMethod( "run" );
                         runMethod.setAccessible( true );
                         runMethod.invoke( runObject ) ;
@@ -104,9 +94,6 @@ public class DConcurrentServer {
 
                 }
             });
-            DObject reply = DObject.newBuilder().setClassName( classNameObj ).build();
-            responseObserver.onNext( reply );
-            responseObserver.onCompleted();
         }
 
         @Override
@@ -114,44 +101,39 @@ public class DConcurrentServer {
             final Any classNameObj = request.getClassName();
             final Any metaParam = request.getMetaParam();
             final Any metaParamClass = request.getMetaParamClass();
-            Future<byte[]> future = threadPool.submit(new Callable<byte[]>() {
-                @Override
-                public byte[] call() throws Exception {
-                    byte[] result = null;
-                    try {
-                        Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
-                        Constructor constructorObj = runClass.getConstructor( DmetaParam.class );
-
-                        ByteString paramClassByte = metaParamClass.getValue();
-                        Object runObject;
-                        if( paramClassByte.size() != 0 ){
-                            Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
-                            Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
-                            runObject = constructorObj.newInstance( metaObject );
-                        }else{
-                            runObject = runClass.newInstance();
-                        }
-                        Method runMethod = runClass.getSuperclass().getDeclaredMethod( "remoteCall" );
-                        runMethod.setAccessible( true );
-                        result = (byte[]) runMethod.invoke( runObject );
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    return result;
-                }
-            });
-            byte[] futureRes = new byte[0];
+            byte[] result = null;
             try {
-                futureRes = future.get();
-            } catch (Exception e) {
+                Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+                Object runObject = getRunObject(classNameObj, metaParam, metaParamClass);
+                Method runMethod = runClass.getSuperclass().getDeclaredMethod( "remoteCall" );
+                runMethod.setAccessible( true );
+                result = (byte[]) runMethod.invoke( runObject );
+            }catch (Exception e){
                 e.printStackTrace();
             }
 
-            Any resultAny = Any.newBuilder().setValue( ByteString.copyFrom( futureRes ) ).build();
+            Any resultAny = Any.newBuilder().setValue( ByteString.copyFrom( result ) ).build();
             DObject reply = DObject.newBuilder().setClassName( resultAny ).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();
         }
+
+
+    }
+
+    private Object getRunObject(Any classNameObj, Any metaParam, Any metaParamClass) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+        Constructor constructorObj = runClass.getConstructor( DmetaParam.class );
+        ByteString paramClassByte = metaParamClass.getValue();
+        Object runObject;
+        if( paramClassByte.size() != 0 ){
+            Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
+            Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
+            runObject = constructorObj.newInstance( metaObject );
+        }else{
+            runObject = runClass.newInstance();
+        }
+        return runObject;
     }
 
 }
