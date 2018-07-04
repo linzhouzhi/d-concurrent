@@ -8,15 +8,41 @@ public interface DObjectOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.google.protobuf.Any message = 3;</code>
+   * <code>.google.protobuf.Any className = 1;</code>
    */
-  boolean hasMessage();
+  boolean hasClassName();
   /**
-   * <code>.google.protobuf.Any message = 3;</code>
+   * <code>.google.protobuf.Any className = 1;</code>
    */
-  com.google.protobuf.Any getMessage();
+  com.google.protobuf.Any getClassName();
   /**
-   * <code>.google.protobuf.Any message = 3;</code>
+   * <code>.google.protobuf.Any className = 1;</code>
    */
-  com.google.protobuf.AnyOrBuilder getMessageOrBuilder();
+  com.google.protobuf.AnyOrBuilder getClassNameOrBuilder();
+
+  /**
+   * <code>.google.protobuf.Any metaParam = 2;</code>
+   */
+  boolean hasMetaParam();
+  /**
+   * <code>.google.protobuf.Any metaParam = 2;</code>
+   */
+  com.google.protobuf.Any getMetaParam();
+  /**
+   * <code>.google.protobuf.Any metaParam = 2;</code>
+   */
+  com.google.protobuf.AnyOrBuilder getMetaParamOrBuilder();
+
+  /**
+   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   */
+  boolean hasMetaParamClass();
+  /**
+   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   */
+  com.google.protobuf.Any getMetaParamClass();
+  /**
+   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   */
+  com.google.protobuf.AnyOrBuilder getMetaParamClassOrBuilder();
 }

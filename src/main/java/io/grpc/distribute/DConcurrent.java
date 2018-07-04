@@ -27,15 +27,17 @@ public final class DConcurrent {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\022d-concurrent.proto\022\013dconcurrent\032\031googl" +
-      "e/protobuf/any.proto\"0\n\007DObject\022%\n\007messa" +
-      "ge\030\003 \001(\0132\024.google.protobuf.Any2~\n\021DConcu" +
-      "rrentServer\0223\n\003Run\022\024.dconcurrent.DObject" +
-      "\032\024.dconcurrent.DObject\"\000\0224\n\004Call\022\024.dconc" +
-      "urrent.DObject\032\024.dconcurrent.DObject\"\000B)" +
-      "\n\022io.grpc.distributeB\013DConcurrentP\001\242\002\003LZ" +
-      "Zb\006proto3"
+      "e/protobuf/any.proto\"\211\001\n\007DObject\022\'\n\tclas" +
+      "sName\030\001 \001(\0132\024.google.protobuf.Any\022\'\n\tmet" +
+      "aParam\030\002 \001(\0132\024.google.protobuf.Any\022,\n\016me" +
+      "taParamClass\030\003 \001(\0132\024.google.protobuf.Any" +
+      "2~\n\021DConcurrentServer\0223\n\003Run\022\024.dconcurre" +
+      "nt.DObject\032\024.dconcurrent.DObject\"\000\0224\n\004Ca" +
+      "ll\022\024.dconcurrent.DObject\032\024.dconcurrent.D" +
+      "Object\"\000B)\n\022io.grpc.distributeB\013DConcurr" +
+      "entP\001\242\002\003LZZb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -55,7 +57,7 @@ public final class DConcurrent {
     internal_static_dconcurrent_DObject_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_dconcurrent_DObject_descriptor,
-        new java.lang.String[] { "Message", });
+        new String[] { "ClassName", "MetaParam", "MetaParamClass", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

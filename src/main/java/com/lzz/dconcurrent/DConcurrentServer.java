@@ -1,5 +1,6 @@
-package com.lzz.dconcurrent.util;
+package com.lzz.dconcurrent;
 
+import com.google.gson.Gson;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import io.grpc.Server;
@@ -7,8 +8,8 @@ import io.grpc.ServerBuilder;
 import io.grpc.distribute.DConcurrentServerGrpc;
 import io.grpc.distribute.DObject;
 import io.grpc.stub.StreamObserver;
-
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -20,16 +21,17 @@ import java.util.concurrent.Future;
  */
 public class DConcurrentServer {
     private ExecutorService threadPool = Executors.newCachedThreadPool();
-    private int port = 50052;
+    private static Gson gson = new Gson();
+
     private Server server;
 
-    public static void daemonStart(){
+    public static void daemonStart(final int port){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 DConcurrentServer server = new DConcurrentServer();
                 try {
-                    server.start();
+                    server.start(port);
                     server.blockUntilShutdown();
                 }catch (Exception e){
 
@@ -37,7 +39,7 @@ public class DConcurrentServer {
             }
         }).start();
     }
-    private void start() throws IOException {
+    private void start(int port) throws IOException {
         server = ServerBuilder.forPort(port)
                 .addService(new DConcurrentServer.DoncurrentImpl())
                 .build()
@@ -74,41 +76,67 @@ public class DConcurrentServer {
     private class DoncurrentImpl extends DConcurrentServerGrpc.DConcurrentServerImplBase {
         @Override
         public void run(DObject request, StreamObserver<DObject> responseObserver) {
-            final Any classNameObj = request.getMessage();
+            final Any classNameObj = request.getClassName();
+            final Any metaParam = request.getMetaParam();
+            final Any metaParamClass = request.getMetaParamClass();
             threadPool.submit(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
-                        System.out.println( class1 + "--ccc");
+                        Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+                        Constructor constructorObj = runClass.getConstructor( DmetaParam.class );
 
-                        Object object = class1.newInstance();
-                        Method runMethod = class1.getDeclaredMethod( "run" );
+                        ByteString paramClassByte = metaParamClass.getValue();
+                        Object runObject;
+                        if( paramClassByte.size() != 0 ){
+                            Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
+                            Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
+                            runObject = constructorObj.newInstance( metaObject );
+                        }else{
+                            runObject = runClass.newInstance();
+                        }
+                        Method runMethod = runClass.getDeclaredMethod( "run" );
                         runMethod.setAccessible( true );
-                        runMethod.invoke( object ) ;
+                        runMethod.invoke( runObject ) ;
                     }catch (Exception e){
                         e.printStackTrace();
                     }
 
                 }
             });
-            DObject reply = DObject.newBuilder().setMessage( classNameObj ).build();
+            DObject reply = DObject.newBuilder().setClassName( classNameObj ).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();
         }
 
         @Override
         public void call(DObject request, StreamObserver<DObject> responseObserver){
-            final Any classNameObj = request.getMessage();
+            final Any classNameObj = request.getClassName();
+            final Any metaParam = request.getMetaParam();
+            final Any metaParamClass = request.getMetaParamClass();
             Future<byte[]> future = threadPool.submit(new Callable<byte[]>() {
                 @Override
                 public byte[] call() throws Exception {
                     byte[] result = null;
-                    Class<?> class1 = Class.forName( classNameObj.getValue().toStringUtf8() );
-                    Object object = class1.newInstance();
-                    Method runMethod = class1.getDeclaredMethod( "call" );
-                    runMethod.setAccessible( true );
-                    result = (byte[]) runMethod.invoke( object );
+                    try {
+                        Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+                        Constructor constructorObj = runClass.getConstructor( DmetaParam.class );
+
+                        ByteString paramClassByte = metaParamClass.getValue();
+                        Object runObject;
+                        if( paramClassByte.size() != 0 ){
+                            Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
+                            Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
+                            runObject = constructorObj.newInstance( metaObject );
+                        }else{
+                            runObject = runClass.newInstance();
+                        }
+                        Method runMethod = runClass.getSuperclass().getDeclaredMethod( "remoteCall" );
+                        runMethod.setAccessible( true );
+                        result = (byte[]) runMethod.invoke( runObject );
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     return result;
                 }
             });
@@ -120,7 +148,7 @@ public class DConcurrentServer {
             }
 
             Any resultAny = Any.newBuilder().setValue( ByteString.copyFrom( futureRes ) ).build();
-            DObject reply = DObject.newBuilder().setMessage( resultAny ).build();
+            DObject reply = DObject.newBuilder().setClassName( resultAny ).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();
         }

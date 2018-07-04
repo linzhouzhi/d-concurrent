@@ -13,5 +13,7 @@ service DConcurrentServer {
   rpc Call(DObject) returns(DObject) {}
 }
 message DObject{
-  google.protobuf.Any message = 3;
+  google.protobuf.Any className = 1;
+  google.protobuf.Any metaParam = 2;
+  google.protobuf.Any metaParamClass = 3;
 }
