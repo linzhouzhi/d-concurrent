@@ -27,7 +27,7 @@ public class Server1 {
         while (true){
             if( !client.isLeader(50051) ){
                 System.out.println( "is not leader" );
-                return;
+                continue;
             }
             List<String> arr = new ArrayList<String>();
             for(int i=0;i<5;i++){

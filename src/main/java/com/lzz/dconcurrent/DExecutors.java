@@ -83,12 +83,14 @@ public class DExecutors {
         try {
             String localIp = NetUtil.getLocalIp();
             for(DConcurrentClient client : clientList){
-                if(NetUtil.checkIpAndPort( client.hostAndPort) ){
-                    if( localIp.equals( client.hostAndPort.getIp() ) && client.hostAndPort.getPort() == serverPort) {
-                        res = true;
+                try {
+                    if(NetUtil.checkIpAndPort( client.hostAndPort) ){
+                        if( localIp.equals( client.hostAndPort.getIp() ) && client.hostAndPort.getPort() == serverPort) {
+                            res = true;
+                        }
+                        break;
                     }
-                    break;
-                }
+                }catch (Exception e){}
             }
             Thread.sleep(2000);
         }catch (Exception e){
