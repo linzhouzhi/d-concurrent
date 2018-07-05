@@ -1,12 +1,14 @@
 package io.grpc.distribute;
 
+import io.grpc.distribute.strategy.RandomStrategy;
 import io.grpc.distribute.util.HostAndPort;
 import io.grpc.distribute.util.NetUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Future;
 
 /**
@@ -14,26 +16,44 @@ import java.util.concurrent.Future;
  */
 public class DExecutors {
     private List<DConcurrentClient> clientList = new ArrayList<DConcurrentClient>();
-
+    private BalanceStrategy balanceStrategy = new RandomStrategy();
     public DExecutors(List<HostAndPort> hostAndPortList){
+        clientInit(hostAndPortList);
+    }
+
+    public DExecutors(List<HostAndPort> hostAndPortList, BalanceStrategy balanceStrategy){
+        this.balanceStrategy = balanceStrategy;
+        clientInit(hostAndPortList);
+    }
+
+    private void clientInit(List<HostAndPort> hostAndPortList){
         for(HostAndPort hostAndPort : hostAndPortList){
             DConcurrentClient client = new DConcurrentClient(hostAndPort);
             clientList.add( client );
         }
     }
+    public DFuture submit(final DCallable callable) {
+        Method runMethod = null;
+        try {
+            runMethod = callable.getClass().getDeclaredMethod( "call" );
+        }catch (Exception e){
 
-    public Future submit(final DCallable callable) {
+        }
+        Type t = runMethod.getReturnType();
+        Class<?> returnType = (Class<?>) t;
         byte[] className = callable.getClass().getName().getBytes();
         Class classObj = callable.getClass();
         Field[] fields = classObj.getDeclaredFields();
         DmetaParam dmetaParam = getDmetaParam(fields, callable);
         byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
         byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
-        return dclient().call(className, metaParam, metaParamClass);
+        Future future = dclient().call(className, metaParam, metaParamClass);
+        DFuture dfuture = new DFuture(future, returnType);
+        return dfuture;
     }
 
 
-    public void submit(final DRuannable runnable){
+    public void submit(final Runnable runnable){
         byte[] className = runnable.getClass().getName().getBytes();
         Class classObj = runnable.getClass();
         Field[] fields = classObj.getDeclaredFields();
@@ -62,15 +82,12 @@ public class DExecutors {
     private DConcurrentClient dclient(){
         System.out.println("client..................");
         List<DConcurrentClient> tmpClientList = new ArrayList<DConcurrentClient>();
-        Random random = new Random();
         for(DConcurrentClient client : clientList){
             if( checkService( client.hostAndPort ) ){
                 tmpClientList.add( client );
             }
         }
-        int index = random.nextInt(tmpClientList.size());
-        System.out.println("get client randow index : " + index);
-        return tmpClientList.get( index );
+        return (DConcurrentClient) balanceStrategy.getClient( tmpClientList );
     }
 
     public boolean isLeader(){

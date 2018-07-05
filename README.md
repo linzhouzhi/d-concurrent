@@ -1,18 +1,114 @@
-# mvn install
+# DConcurrent 分布式并行处理框架
+> 模仿 concurrent 多线程处理方式，进行分布式调用的 java 类库。使用该类库您可以轻松的设计分布式应用
+  
+# 使用场景
+### 一、 高可用异地容错应用
+    举例：有这样的需求，设计一款 高可用多服务健康检查应用，应用需求 多个节点对服务进行健康检查后投票给 leader 统计
+    统计完成后将服务糟糕的集群下线。      
+    DConcurrent 实现：
+    ```
+    // new 一个 DConcurrent 的客户端， hostAndPortList 机器列表
+    DExecutors client = new DExecutors( hostAndPortList);
+    // 启动三个节点
+    DFuture haNode1 = client.submit( new healthyCallable(dmetaParam) );
+    DFuture haNode2 = client.submit( new healthyCallable(dmetaParam) );
+    DFuture haNode3 = client.submit( new healthyCallable(dmetaParam) );
+    // 获取票数
+    Healthy healthy1 =haNode1.get()；
+    Healthy healthy2 =haNode1.get()；
+    Healthy healthy3 =haNode1.get()；
+    // 统计
+    ```
+    
+### 二、 多任务分发应用
+    举例：需求设计一款 hbase 平台化增量系统，scan 每个 region 后将 update 数据发到 kafaka,
+    由于 scan 出来的数据量大而且 region 数比较多，所以单台机器处理能力有限，所以需要我们进行分布式处理并高可用。      
+    DConcurrent 实现：
+    ```
+    // new 一个 DConcurrent 的客户端， hostAndPortList 机器列表， FailStrategy 采用公平调度
+    DExecutors client = new DExecutors( hostAndPortList, new FailStrategy() );
+    // 任务列表
+    List<ScanTask> taskList = new ArrayList();
+    // 分发到其它机器运行
+    for(ScanTask task : taskList){
+        client.submit( new ScanTaskRunnable(task) );
+    }
+    ```
+    
+# 框架介绍
+```
+├── core                                     // rpc 核心包
+├── strategy                                 // 负载策略具体实现
+├── util                                     // 工具包   
+├── BalanceStrategy.java                     // 负载策略接口，通过该策略决定怎么调度    
+├── DCallable.java                           // 需要返回结果到必须实现该接口
+├── DConcurrentClient.java                   // DConcurrent 到客户端     
+├── DConcurrentServer.java                   // DConcurrent 到服务端 
+├── DExecutors.java                          // 用户执行接口，用户使用到功能都通过该对象来调用
+├── DFuture.java                             // DConcurrent 都 future    
+├── DmetaParam.java                          // runable 或 callable 如果需要传递参数，必须使用该类型
+├── Status.java                              // 服务状态类型
+```
+ 
 
-# 客户端从 zk（配置文件中读取会更方便） 获取 servicelist 进行分布式调用
-配置文件 ip:port 不断检测，将可以的地址放入 set
-Executors.submit() //client-pool 是一个客户端池
+# 使用 demo
+```
+public class Server1 {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        // 启动服务
+        DConcurrentServer.daemonStart(50051);
+        // 服务列表
+        List<HostAndPort> hostAndPortList = new ArrayList<HostAndPort>();
+        HostAndPort hostAndPort1 = new HostAndPort("192.168.31.147", 50051);
+        HostAndPort hostAndPort2 = new HostAndPort("192.168.31.147", 50052);
+        HostAndPort hostAndPort3 = new HostAndPort("192.168.31.147", 50053);
+        hostAndPortList.add( hostAndPort1 );
+        hostAndPortList.add( hostAndPort2 );
+        hostAndPortList.add( hostAndPort3 );
+        // DConcurrent 客户端
+        DExecutors client = new DExecutors( hostAndPortList, new FailStrategy() );
+    
+        while (true){
+            // 只有 leader 才可以继续往下执行
+            if( !client.isLeader() ){
+                System.out.println( "is not leader" );
+                continue;
+            }
+            
+            // 运行一个 Runnable
+            DmetaParamTest dmetaParam = new DmetaParamTest();
+            client.submit(new TestRuannable( dmetaParam ) );
+            
+            // 运行两个 Callable
+            DFuture future1 = client.submit( new TestCallable(dmetaParam) );
+            dmetaParam.setAge(1110000);
+            DFuture<CallResultTest> future2 = client.submit( new TestCallable(dmetaParam) );
+            CallResultTest str = (CallResultTest) future1.get();
+            CallResultTest str2 = future2.get();
+            System.out.println("finish---------------------" + str);
+            Thread.sleep(2000);
+        }
+    }
 
-# 服务端
+    public static class TestRuannable implements Runnable {
+        // 参数必须是 DmetaParam 类型
+        DmetaParamTest dmetaParamTest;
+        public TestRuannable(){
+            //ignore
+        }
 
-https://blog.csdn.net/briblue/article/details/73824058
+        public TestRuannable(DmetaParamTest dmetaParamTest){
+            this.dmetaParamTest = (DmetaParamTest) dmetaParamTest;
+        }
 
-反射
-多线程
-rpc
-系列化
-参数传递可以用 json
-开发一套注解
-java-bean 用于监控
-线程如何关
+        @Override
+        public void run() {
+            System.out.println("drunnable " + this.dmetaParamTest);
+        }
+    }
+}
+```
+
+
+mvn install
+

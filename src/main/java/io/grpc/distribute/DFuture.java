@@ -1,22 +1,28 @@
 package io.grpc.distribute;
 
+
 import com.google.gson.Gson;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
- * Created by gl49 on 2018/7/4.
+ * Created by lzz on 2018/7/5.
  */
 public class DFuture<T> {
     private static Gson gson = new Gson();
-    private Class<?> classType;
-    public DFuture(Class<?> classType) {
-        this.classType = classType;
+
+    private Future feature;
+    private Class<?> returnType;
+
+    public DFuture(Future feature, Class<?> returnType) {
+        this.feature = feature;
+        this.returnType = returnType;
     }
 
-    public T get(Future futureTask) throws ExecutionException, InterruptedException {
-        byte[] resultByte = (byte[]) futureTask.get();
+    public T get() throws ExecutionException, InterruptedException {
+        byte[] resultByte = (byte[]) feature.get();
         String resultStr = new String(resultByte);
-        return (T) gson.fromJson(resultStr, this.classType);
+        return (T) gson.fromJson(resultStr, returnType);
     }
 }

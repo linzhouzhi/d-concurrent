@@ -7,7 +7,6 @@ import com.google.gson.Gson;
  */
 public abstract class DCallable<T> {
     private static Gson gson = new Gson();
-
     protected byte[] remoteCall() {
         T res =  call();
         byte[] byteRes = gson.toJson( res ).toString().getBytes();
