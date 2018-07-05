@@ -2,13 +2,15 @@ syntax = "proto3";
 import "google/protobuf/any.proto";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.distribute";
+option java_package = "io.grpc.distribute.core";
 option java_outer_classname = "DConcurrent";
 option objc_class_prefix = "LZZ";
 
 package dconcurrent;
 
 service DConcurrentServer {
+  rpc ResetStat(DStatus) returns(google.protobuf.Any) {}
+  rpc GetStat(google.protobuf.Any) returns(DStatus) {}
   rpc Run(DObject) returns(DObject) {}
   rpc Call(DObject) returns(DObject) {}
 }
@@ -16,4 +18,9 @@ message DObject{
   google.protobuf.Any className = 1;
   google.protobuf.Any metaParam = 2;
   google.protobuf.Any metaParamClass = 3;
+}
+
+message DStatus{
+    int32 runCount = 1;
+    int32 callCount = 2;
 }

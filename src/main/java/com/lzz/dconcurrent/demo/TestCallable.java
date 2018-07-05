@@ -1,7 +1,7 @@
 package com.lzz.dconcurrent.demo;
 
-import com.lzz.dconcurrent.DCallable;
-import com.lzz.dconcurrent.DmetaParam;
+import io.grpc.distribute.DCallable;
+import io.grpc.distribute.DmetaParam;
 
 /**
  * Created by gl49 on 2018/7/4.
@@ -19,6 +19,11 @@ public class TestCallable extends DCallable<CallResultTest> {
         int count = this.dmetaParamTest.age;
         CallResultTest callResultTest = new CallResultTest(12321, "hello call test....", 200 + count);
         System.out.println( callResultTest );
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return callResultTest;
     }
 }

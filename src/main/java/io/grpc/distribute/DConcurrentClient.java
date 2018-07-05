@@ -1,12 +1,13 @@
-package com.lzz.dconcurrent;
+package io.grpc.distribute;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
-import com.lzz.dconcurrent.util.HostAndPort;
+import io.grpc.distribute.util.HostAndPort;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.distribute.DConcurrentServerGrpc;
-import io.grpc.distribute.DObject;
+import io.grpc.distribute.core.DConcurrentServerGrpc;
+import io.grpc.distribute.core.DObject;
+import io.grpc.distribute.core.DStatus;
 
 import java.util.concurrent.*;
 
@@ -55,6 +56,14 @@ public class DConcurrentClient {
                 blockingStub.run(request);
             }
         });
+    }
+
+    public Status getStatus(){
+        DStatus dStatus = blockingStub.getStat( Any.getDefaultInstance() );
+        Status status = new Status();
+        status.setRunCount( dStatus.getRunCount() );
+        status.setCallCount( dStatus.getCallCount() );
+        return status;
     }
 
     private DObject builderRequest(byte[] className, byte[] metaParam, byte[] metaParamClass) {

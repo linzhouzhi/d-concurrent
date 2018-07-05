@@ -1,7 +1,7 @@
-package com.lzz.dconcurrent;
+package io.grpc.distribute;
 
-import com.lzz.dconcurrent.util.HostAndPort;
-import com.lzz.dconcurrent.util.NetUtil;
+import io.grpc.distribute.util.HostAndPort;
+import io.grpc.distribute.util.NetUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,35 +60,53 @@ public class DExecutors {
     }
 
     private DConcurrentClient dclient(){
+        System.out.println("client..................");
         List<DConcurrentClient> tmpClientList = new ArrayList<DConcurrentClient>();
         Random random = new Random();
         for(DConcurrentClient client : clientList){
-            if( !client.isShutdown() ){
+            if( checkService( client.hostAndPort ) ){
                 tmpClientList.add( client );
             }
         }
-
         int index = random.nextInt(tmpClientList.size());
         System.out.println("get client randow index : " + index);
         return tmpClientList.get( index );
     }
 
-    public boolean isLeader(int serverPort){
+    public boolean isLeader(){
         boolean res = false;
         try {
             String localIp = NetUtil.getLocalIp();
+            System.out.println("leader..................................." + localIp + ":" + DConcurrentServer.port);
             for(DConcurrentClient client : clientList){
+                HostAndPort hostAndPort = client.hostAndPort;
                 try {
-                    if(NetUtil.checkIpAndPort( client.hostAndPort) ){
-                        if( localIp.equals( client.hostAndPort.getIp() ) && client.hostAndPort.getPort() == serverPort) {
+                    if( checkService(hostAndPort) ){
+                        if( localIp.equals( hostAndPort.getIp() ) && hostAndPort.getPort() == DConcurrentServer.port) {
                             res = true;
                         }
                         break;
                     }
-                }catch (Exception e){}
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
             // 不是 leader 10 秒后再试，因为有可能是其它节点挂了
             Thread.sleep(10000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
+    public boolean checkService(HostAndPort hostAndPort){
+        boolean res = false;
+        try {
+            DConcurrentClient dConcurrentClient = new DConcurrentClient( hostAndPort );
+            dConcurrentClient.getStatus();
+            dConcurrentClient.shutdown();
+            res = true;
         }catch (Exception e){
 
         }

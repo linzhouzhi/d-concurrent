@@ -1,6 +1,6 @@
 package com.lzz.dconcurrent.demo;
 
-import com.lzz.dconcurrent.DmetaParam;
+import io.grpc.distribute.DmetaParam;
 
 /**
  * Created by gl49 on 2018/7/4.

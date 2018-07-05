@@ -1,4 +1,4 @@
-package com.lzz.dconcurrent.util;
+package io.grpc.distribute.util;
 
 import java.io.IOException;
 import java.net.*;
@@ -53,13 +53,15 @@ public class NetUtil {
         boolean res = false;
         Socket socket = new Socket();
         try {
-            socket.connect(new InetSocketAddress(hostAndPort.getIp(), hostAndPort.getPort()));
+            socket.connect(new InetSocketAddress(hostAndPort.getIp(), hostAndPort.getPort()), 15000);
             res = true;
         } catch (IOException ignore) {
 
         } finally {
             try {
-                socket.close();
+                if( !socket.isClosed() || socket.isConnected()){
+                    socket.close();
+                }
             } catch (IOException ignore) {
                 ignore.printStackTrace();
             }

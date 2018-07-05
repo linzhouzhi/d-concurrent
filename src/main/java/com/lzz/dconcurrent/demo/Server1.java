@@ -1,7 +1,7 @@
 package com.lzz.dconcurrent.demo;
 
-import com.lzz.dconcurrent.*;
-import com.lzz.dconcurrent.util.*;
+import io.grpc.distribute.*;
+import io.grpc.distribute.util.HostAndPort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,16 @@ public class Server1 {
         DConcurrentServer.daemonStart(50051);
 
         List<HostAndPort> hostAndPortList = new ArrayList<HostAndPort>();
-        HostAndPort hostAndPort1 = new HostAndPort("192.168.31.147", 50051);
-        HostAndPort hostAndPort2 = new HostAndPort("192.168.31.147", 50052);
-        HostAndPort hostAndPort3 = new HostAndPort("192.168.31.147", 50053);
+        HostAndPort hostAndPort1 = new HostAndPort("10.16.164.33", 50051);
+        HostAndPort hostAndPort2 = new HostAndPort("10.16.164.33", 50052);
+        HostAndPort hostAndPort3 = new HostAndPort("10.16.164.33", 50053);
         hostAndPortList.add( hostAndPort1 );
         hostAndPortList.add( hostAndPort2 );
         hostAndPortList.add( hostAndPort3 );
         DExecutors client = new DExecutors( hostAndPortList );
 
         while (true){
-            if( !client.isLeader(50051) ){
+            if( !client.isLeader() ){
                 System.out.println( "is not leader" );
                 continue;
             }
@@ -43,6 +43,7 @@ public class Server1 {
             DFuture<CallResultTest> dFuture = new DFuture(CallResultTest.class);
             CallResultTest str = dFuture.get( future1 );
             CallResultTest str2 = dFuture.get( future2 );
+            System.out.println("finish---------------------" + str);
             Thread.sleep(2000);
         }
     }

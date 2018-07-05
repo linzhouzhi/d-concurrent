@@ -1,4 +1,4 @@
-package com.lzz.dconcurrent.util;
+package io.grpc.distribute.util;
 
 /**
  * Created by gl49 on 2018/7/4.
