@@ -54,7 +54,7 @@ public class Server1 {
             //ignore
         }
 
-        public TestRuannable(DmetaParam dmetaParamTest){
+        public TestRuannable(DmetaParamTest dmetaParamTest){
             System.out.println("cccc test runnbale");
             this.dmetaParamTest = (DmetaParamTest) dmetaParamTest;
         }

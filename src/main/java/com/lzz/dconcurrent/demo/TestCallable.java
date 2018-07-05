@@ -10,7 +10,7 @@ public class TestCallable extends DCallable<CallResultTest> {
     DmetaParamTest dmetaParamTest;
 
     public TestCallable(){}
-    public TestCallable(DmetaParam dmetaParam){
+    public TestCallable(DmetaParamTest dmetaParam){
         this.dmetaParamTest = (DmetaParamTest) dmetaParam;
     }
 

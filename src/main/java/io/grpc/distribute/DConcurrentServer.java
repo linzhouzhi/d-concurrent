@@ -136,8 +136,8 @@ public class DConcurrentServer {
         Object runObject;
         ByteString paramClassByte = metaParamClass.getValue();
         if( paramClassByte.size() != 0 ){
-            Constructor constructorObj = runClass.getConstructor( DmetaParam.class );
             Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
+            Constructor constructorObj = runClass.getConstructor( paramClass ); //DmetaParam.class
             Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
             runObject = constructorObj.newInstance( metaObject );
         }else{
