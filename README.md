@@ -1,8 +1,8 @@
 # DConcurrent 分布式并行处理框架
 > 模仿 concurrent 多线程处理方式，进行分布式调用的 java 类库。使用该类库您可以轻松的设计分布式应用,比如 高可用异地容错应用、多任务分发应用...
   
-# 使用场景
-### 一、 高可用异地容错应用
+# 一、使用场景
+### 1.1、 高可用异地容错应用
     举例：有这样的需求，设计一款 高可用多服务健康检查应用，应用需求 多个节点对服务进行健康检查后投票给 leader 统计
     统计完成后将服务糟糕的集群下线。      
     DConcurrent 实现：
@@ -20,7 +20,7 @@
     // 统计
     ```
     
-### 二、 多任务分发应用
+### 1.2、 多任务分发应用
     举例：需求设计一款 hbase 平台化增量系统，scan 每个 region 后将 update 数据发到 kafaka,
     由于 scan 出来的数据量大而且 region 数比较多，所以单台机器处理能力有限，所以需要我们进行分布式处理并高可用。      
     DConcurrent 实现：
@@ -35,7 +35,7 @@
     }
     ```
     
-# 框架介绍
+# 二、框架介绍
 ```
 ├── core                                     // rpc 核心包
 ├── strategy                                 // 负载策略具体实现
@@ -51,7 +51,7 @@
 ```
  
 
-# 使用 demo
+# 三、使用 demo
 ```
 public class Server1 {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
