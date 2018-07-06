@@ -85,7 +85,6 @@ public class DExecutors {
     }
 
     private DConcurrentClient dclient(int balanceKey){
-        System.out.println("client..................");
         List<DConcurrentClient> tmpClientList = new ArrayList<DConcurrentClient>();
         for(DConcurrentClient client : clientList){
             if( checkService( client.hostAndPort ) ){
@@ -99,7 +98,6 @@ public class DExecutors {
         boolean res = false;
         try {
             String localIp = NetUtil.getLocalIp();
-            System.out.println("leader..................................." + localIp + ":" + DConcurrentServer.port);
             for(DConcurrentClient client : clientList){
                 HostAndPort hostAndPort = client.hostAndPort;
                 try {
@@ -113,6 +111,7 @@ public class DExecutors {
                     e.printStackTrace();
                 }
             }
+            System.out.println("leader..................................." + localIp + ":" + DConcurrentServer.port + " is " + res);
             // 不是 leader 10 秒后再试，因为有可能是其它节点挂了
             Thread.sleep(10000);
         }catch (Exception e){

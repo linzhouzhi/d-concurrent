@@ -18,7 +18,10 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
         }
         Object client = taskTable.get( balanceKey );
         Set listSet = new HashSet(list);
-        Set taskTableSet = (Set) taskTable.values();
+        Set taskTableSet = new HashSet();
+        if( taskTable.values().isEmpty() ){
+            taskTableSet = new HashSet();
+        }
         if( null ==  client ){
             // 选择 list 有的 taskTable 没有的
             Set taskTableWidhout = Sets.difference( listSet, taskTableSet );

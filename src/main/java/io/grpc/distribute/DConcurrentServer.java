@@ -21,7 +21,6 @@ import java.util.concurrent.Executors;
  * Created by lzz on 2018/3/26.
  */
 public class DConcurrentServer {
-    private ExecutorService threadPool = Executors.newCachedThreadPool();
     private static Gson gson = new Gson();
     public static int port;
     private Server server;
@@ -84,20 +83,15 @@ public class DConcurrentServer {
             final Any classNameObj = request.getClassName();
             final Any metaParam = request.getMetaParam();
             final Any metaParamClass = request.getMetaParamClass();
-            threadPool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
-                        Object runObject = getRunObject(classNameObj, metaParam, metaParamClass);
-                        Method runMethod = runClass.getDeclaredMethod( "run" );
-                        runMethod.setAccessible( true );
-                        runMethod.invoke( runObject ) ;
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            });
+            try {
+                Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+                Object runObject = getRunObject(classNameObj, metaParam, metaParamClass);
+                Method runMethod = runClass.getDeclaredMethod( "run" );
+                runMethod.setAccessible( true );
+                runMethod.invoke( runObject ) ;
+            }catch (Exception e){
+
+            }
         }
 
         @Override
