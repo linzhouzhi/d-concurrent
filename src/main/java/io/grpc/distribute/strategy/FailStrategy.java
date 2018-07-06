@@ -12,7 +12,7 @@ public class FailStrategy implements BalanceStrategy {
     private Map<Object, Integer> callCountMap = new HashMap();
 
     @Override
-    public Object getClient(List list) {
+    public Object getClient(List list, int balanceKey) {
         Set listSet = new HashSet(list);
         Set callCountSet = callCountMap.keySet();
         //如果有新加入的节点，要清空计数器，避免集中调用到刚进来到节点

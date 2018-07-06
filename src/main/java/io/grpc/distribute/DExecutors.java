@@ -32,7 +32,7 @@ public class DExecutors {
             clientList.add( client );
         }
     }
-    public DFuture submit(final DCallable callable) {
+    public DFuture submit(final DCallable callable, int balanceKey) {
         Method runMethod = null;
         try {
             runMethod = callable.getClass().getDeclaredMethod( "call" );
@@ -47,20 +47,25 @@ public class DExecutors {
         DmetaParam dmetaParam = getDmetaParam(fields, callable);
         byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
         byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
-        Future future = dclient().call(className, metaParam, metaParamClass);
+        Future future = dclient(balanceKey).call(className, metaParam, metaParamClass);
         DFuture dfuture = new DFuture(future, returnType);
         return dfuture;
     }
+    public DFuture submit(final DCallable callable) {
+        return submit(callable, -1);
+    }
 
-
-    public void submit(final Runnable runnable){
+    public void submit(final Runnable runnable, int balanceKey){
         byte[] className = runnable.getClass().getName().getBytes();
         Class classObj = runnable.getClass();
         Field[] fields = classObj.getDeclaredFields();
         DmetaParam dmetaParam = getDmetaParam(fields, runnable);
         byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
         byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
-        dclient().run( className, metaParam,  metaParamClass);
+        dclient(balanceKey).run( className, metaParam,  metaParamClass);
+    }
+    public void submit(final Runnable runnable){
+        submit(runnable, -1);
     }
 
     private DmetaParam getDmetaParam(Field[] fields, Object object) {
@@ -79,7 +84,7 @@ public class DExecutors {
         return dmetaParam;
     }
 
-    private DConcurrentClient dclient(){
+    private DConcurrentClient dclient(int balanceKey){
         System.out.println("client..................");
         List<DConcurrentClient> tmpClientList = new ArrayList<DConcurrentClient>();
         for(DConcurrentClient client : clientList){
@@ -87,7 +92,7 @@ public class DExecutors {
                 tmpClientList.add( client );
             }
         }
-        return (DConcurrentClient) balanceStrategy.getClient( tmpClientList );
+        return (DConcurrentClient) balanceStrategy.getClient( tmpClientList, balanceKey );
     }
 
     public boolean isLeader(){

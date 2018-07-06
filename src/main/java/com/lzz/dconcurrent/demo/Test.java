@@ -10,10 +10,14 @@ import java.util.Set;
  */
 public class Test {
     public static  void main(String[] args){
+        String s = "";
+        s.hashCode();
+
         Set listSet = new HashSet();
         listSet.add("aa");
         listSet.add("bb");
         listSet.add("dd");
+
         Set callCountSet = new HashSet();
         callCountSet.add("aa");
         callCountSet.add("bb");
