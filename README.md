@@ -1,4 +1,4 @@
-# DConcurrent 分布式并行处理框架
+# DConcurrent 分布式并行处理工具包
 > 模仿 concurrent 多线程处理方式，进行分布式调用的 java 类库。使用该类库您可以轻松的设计分布式应用,比如 高可用异地容错应用、多任务分发应用...
   
 # 一、使用场景
@@ -41,10 +41,10 @@
 ├── strategy                                 // 负载策略具体实现
 ├── util                                     // 工具包   
 ├── BalanceStrategy.java                     // 负载策略接口，通过该策略决定怎么调度    
-├── DCallable.java                           // 需要返回结果到必须实现该接口
-├── DConcurrentClient.java                   // DConcurrent 到客户端     
-├── DConcurrentServer.java                   // DConcurrent 到服务端 
-├── DExecutors.java                          // 用户执行接口，用户使用到功能都通过该对象来调用
+├── DCallable.java                           // 需要返回结果的callable必须实现该接口
+├── DConcurrentClient.java                   // DConcurrent 的客户端     
+├── DConcurrentServer.java                   // DConcurrent 的服务端 
+├── DExecutors.java                          // 用户执行接口，用户使用的功能都通过该对象来调用
 ├── DFuture.java                             // DConcurrent 都 future    
 ├── DmetaParam.java                          // runable 或 callable 如果需要传递参数，必须使用该类型
 ├── Status.java                              // 服务状态类型
