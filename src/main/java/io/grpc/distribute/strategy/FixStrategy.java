@@ -17,9 +17,9 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
             return super.getClient(list, -1);
         }
         Object client = taskTable.get( balanceKey );
+        Set listSet = new HashSet(list);
+        Set taskTableSet = (Set) taskTable.values();
         if( null ==  client ){
-            Set listSet = new HashSet(list);
-            Set taskTableSet = (Set) taskTable.values();
             // 选择 list 有的 taskTable 没有的
             Set taskTableWidhout = Sets.difference( listSet, taskTableSet );
             if( !taskTableWidhout.isEmpty() ){
@@ -49,6 +49,18 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
                 taskTable.put(balanceKey, res);
             }
             client = taskTable.get( balanceKey );
+        }
+        // 删除 taskTable 有 list 没有的
+        Set listWidhout = Sets.difference( taskTableSet, listSet );
+        for(Object object : listWidhout){
+            int removeKey = 0;
+            for(Map.Entry<Integer, Object> element : taskTable.entrySet()){
+                if( element.getValue() == object ){
+                    removeKey = element.getKey();
+                    break;
+                }
+            }
+            taskTable.remove( removeKey );
         }
         return client;
     }
