@@ -1,15 +1,14 @@
-package io.grpc.distribute;
+package util.concurrent;
 
-import com.google.gson.Gson;
+import util.concurrent.util.ByteTransform;
 
 /**
  * Created by lzz on 2018/7/4.
  */
 public abstract class DCallable<T> {
-    private static Gson gson = new Gson();
     protected byte[] remoteCall() {
         T res =  call();
-        byte[] byteRes = gson.toJson( res ).toString().getBytes();
+        byte[] byteRes = ByteTransform.serialized( res );
         return byteRes;
     }
     protected abstract T call();

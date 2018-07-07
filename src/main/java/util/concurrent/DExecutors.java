@@ -1,8 +1,8 @@
-package io.grpc.distribute;
+package util.concurrent;
 
-import io.grpc.distribute.strategy.RandomStrategy;
-import io.grpc.distribute.util.HostAndPort;
-import io.grpc.distribute.util.NetUtil;
+import util.concurrent.strategy.RandomStrategy;
+import util.concurrent.util.HostAndPort;
+import util.concurrent.util.NetUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

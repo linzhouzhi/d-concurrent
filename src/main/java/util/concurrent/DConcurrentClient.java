@@ -1,13 +1,13 @@
-package io.grpc.distribute;
+package util.concurrent;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
-import io.grpc.distribute.util.HostAndPort;
+import util.concurrent.util.HostAndPort;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.distribute.core.DConcurrentServerGrpc;
-import io.grpc.distribute.core.DObject;
-import io.grpc.distribute.core.DStatus;
+import util.concurrent.core.DConcurrentServerGrpc;
+import util.concurrent.core.DObject;
+import util.concurrent.core.DStatus;
 
 import java.util.concurrent.*;
 

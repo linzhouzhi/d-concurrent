@@ -2,7 +2,7 @@ syntax = "proto3";
 import "google/protobuf/any.proto";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.distribute.core";
+option java_package = "util.concurrent.core";
 option java_outer_classname = "DConcurrent";
 option objc_class_prefix = "LZZ";
 

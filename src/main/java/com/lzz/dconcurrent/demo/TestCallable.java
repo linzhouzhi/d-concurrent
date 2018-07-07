@@ -1,7 +1,6 @@
 package com.lzz.dconcurrent.demo;
 
-import io.grpc.distribute.DCallable;
-import io.grpc.distribute.DmetaParam;
+import util.concurrent.DCallable;
 
 /**
  * Created by gl49 on 2018/7/4.

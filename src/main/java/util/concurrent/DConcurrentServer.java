@@ -1,27 +1,24 @@
-package io.grpc.distribute;
+package util.concurrent;
 
-import com.google.gson.Gson;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.distribute.core.DConcurrentServerGrpc;
-import io.grpc.distribute.core.DObject;
-import io.grpc.distribute.core.DStatus;
+import util.concurrent.core.DConcurrentServerGrpc;
+import util.concurrent.core.DObject;
+import util.concurrent.core.DStatus;
+import util.concurrent.util.ByteTransform;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by lzz on 2018/3/26.
  */
 public class DConcurrentServer {
-    private static Gson gson = new Gson();
     public static int port;
     private Server server;
     private static int runCount = 0;
@@ -132,7 +129,7 @@ public class DConcurrentServer {
         if( paramClassByte.size() != 0 ){
             Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
             Constructor constructorObj = runClass.getConstructor( paramClass ); //DmetaParam.class
-            Object metaObject = gson.fromJson(metaParam.getValue().toStringUtf8(), paramClass);
+            Object metaObject = ByteTransform.unSerialized(metaParam.getValue().toStringUtf8(), paramClass);
             runObject = constructorObj.newInstance( metaObject );
         }else{
             runObject = runClass.newInstance();

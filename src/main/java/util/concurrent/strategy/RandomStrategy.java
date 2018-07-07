@@ -1,6 +1,6 @@
-package io.grpc.distribute.strategy;
+package util.concurrent.strategy;
 
-import io.grpc.distribute.BalanceStrategy;
+import util.concurrent.BalanceStrategy;
 
 import java.util.List;
 import java.util.Random;

@@ -1,7 +1,6 @@
-package io.grpc.distribute;
+package util.concurrent;
 
-
-import com.google.gson.Gson;
+import util.concurrent.util.ByteTransform;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -10,7 +9,6 @@ import java.util.concurrent.Future;
  * Created by lzz on 2018/7/5.
  */
 public class DFuture<T> {
-    private static Gson gson = new Gson();
 
     private Future feature;
     private Class<?> returnType;
@@ -22,7 +20,6 @@ public class DFuture<T> {
 
     public T get() throws ExecutionException, InterruptedException {
         byte[] resultByte = (byte[]) feature.get();
-        String resultStr = new String(resultByte);
-        return (T) gson.fromJson(resultStr, returnType);
+        return (T) ByteTransform.unSerialized(resultByte, returnType);
     }
 }
