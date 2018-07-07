@@ -1,6 +1,6 @@
-package util.concurrent.strategy;
+package util.dconcurrent.strategy;
 
-import util.concurrent.BalanceStrategy;
+import util.dconcurrent.BalanceStrategy;
 
 import java.util.List;
 import java.util.Random;

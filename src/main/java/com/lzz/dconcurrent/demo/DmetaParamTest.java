@@ -1,6 +1,6 @@
 package com.lzz.dconcurrent.demo;
 
-import util.concurrent.DmetaParam;
+import util.dconcurrent.DmetaParam;
 
 /**
  * Created by gl49 on 2018/7/4.

@@ -1,6 +1,6 @@
 package com.lzz.dconcurrent.demo;
 
-import util.concurrent.DCallable;
+import util.dconcurrent.DCallable;
 
 import java.util.ArrayList;
 import java.util.List;

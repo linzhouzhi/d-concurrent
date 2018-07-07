@@ -1,11 +1,10 @@
 package com.lzz.dconcurrent.demo;
 
-import util.concurrent.DConcurrentServer;
-import util.concurrent.DExecutors;
-import util.concurrent.DFuture;
-import util.concurrent.strategy.FixStrategy;
-import util.concurrent.util.HostAndPort;
-
+import util.dconcurrent.DConcurrentServer;
+import util.dconcurrent.DExecutors;
+import util.dconcurrent.DFuture;
+import util.dconcurrent.strategy.FixStrategy;
+import util.dconcurrent.util.HostAndPort;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;

@@ -1,7 +1,7 @@
-package util.concurrent.strategy;
+package util.dconcurrent.strategy;
 
 import com.google.common.collect.Sets;
-import util.concurrent.BalanceStrategy;
+import util.dconcurrent.BalanceStrategy;
 
 import java.util.*;
 
