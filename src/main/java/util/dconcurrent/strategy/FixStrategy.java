@@ -9,12 +9,12 @@ import java.util.*;
  * Created by lzz on 2018/7/5.
  */
 public class FixStrategy extends RandomStrategy implements BalanceStrategy {
-    private Map<Integer, Object> taskTable = new HashMap();
+    private Map<String, Object> taskTable = new HashMap();
 
     @Override
-    public Object getClient(List list, int balanceKey) {
-        if( -1 == balanceKey ){ // 随机取出一个，并不做记录保存
-            return super.getClient(list, -1);
+    public Object getClient(List list, String balanceKey) {
+        if( null == balanceKey ){ // 随机取出一个，并不做记录保存
+            return super.getClient(list, null);
         }
         Object client = taskTable.get( balanceKey );
         Set listSet = new HashSet(list);
@@ -29,7 +29,7 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
                 taskTable.put( balanceKey, taskTableWidhout.iterator().next() );
             }else{ // 如果 taskTable 包含了所有 list 都有的那么就选择调用次数最少的个节点
                 Map<Object, Integer> groupClientCount = new HashMap<Object, Integer>();
-                for(Map.Entry<Integer, Object> element : taskTable.entrySet()){
+                for(Map.Entry<String, Object> element : taskTable.entrySet()){
                     Object clientObj = element.getValue();
                     if( null == groupClientCount.get( clientObj ) ){
                         groupClientCount.put(clientObj, 1);
@@ -56,8 +56,8 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
         // 删除 taskTable 有 list 没有的
         Set listWidhout = Sets.difference( taskTableSet, listSet );
         for(Object object : listWidhout){
-            int removeKey = 0;
-            for(Map.Entry<Integer, Object> element : taskTable.entrySet()){
+            String removeKey = null;
+            for(Map.Entry<String, Object> element : taskTable.entrySet()){
                 if( element.getValue() == object ){
                     removeKey = element.getKey();
                     break;

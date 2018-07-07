@@ -32,7 +32,7 @@ public class DExecutors {
             clientList.add( client );
         }
     }
-    public DFuture submit(final DCallable callable, int balanceKey) {
+    public DFuture submit(final DCallable callable, String balanceKey) {
         Method runMethod = null;
         try {
             runMethod = callable.getClass().getDeclaredMethod( "call" );
@@ -52,10 +52,10 @@ public class DExecutors {
         return dfuture;
     }
     public DFuture submit(final DCallable callable) {
-        return submit(callable, -1);
+        return submit(callable, null);
     }
 
-    public void submit(final Runnable runnable, int balanceKey){
+    public void submit(final Runnable runnable, String balanceKey){
         byte[] className = runnable.getClass().getName().getBytes();
         Class classObj = runnable.getClass();
         Field[] fields = classObj.getDeclaredFields();
@@ -65,7 +65,7 @@ public class DExecutors {
         dclient(balanceKey).run( className, metaParam,  metaParamClass);
     }
     public void submit(final Runnable runnable){
-        submit(runnable, -1);
+        submit(runnable, null);
     }
 
     private DmetaParam getDmetaParam(Field[] fields, Object object) {
@@ -84,7 +84,7 @@ public class DExecutors {
         return dmetaParam;
     }
 
-    private DConcurrentClient dclient(int balanceKey){
+    private DConcurrentClient dclient(String balanceKey){
         List<DConcurrentClient> tmpClientList = new ArrayList<DConcurrentClient>();
         for(DConcurrentClient client : clientList){
             if( checkService( client.hostAndPort ) ){

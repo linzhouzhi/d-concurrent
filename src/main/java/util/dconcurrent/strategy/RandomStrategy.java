@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class RandomStrategy implements BalanceStrategy {
     @Override
-    public Object getClient(List list, int balanceKey) {
+    public Object getClient(List list, String balanceKey) {
         Random random = new Random();
         int index = random.nextInt(list.size());
         return list.get(index);

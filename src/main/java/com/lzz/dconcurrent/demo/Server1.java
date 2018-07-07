@@ -38,7 +38,7 @@ public class Server1 {
 
             DFuture future1 = client.submit( new TestCallable(dmetaParam) );
             dmetaParam.setAge(1110000);
-            DFuture<CallResultTest> future2 = client.submit( new TestCallable(dmetaParam), 1 );
+            DFuture<CallResultTest> future2 = client.submit( new TestCallable(dmetaParam), dmetaParam.getName());
             CallResultTest str = (CallResultTest) future1.get();
             CallResultTest str2 = future2.get();
             System.out.println("finish---------------------" + str);
