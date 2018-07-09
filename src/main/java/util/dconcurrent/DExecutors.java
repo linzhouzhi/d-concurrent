@@ -1,5 +1,7 @@
 package util.dconcurrent;
 
+import com.google.common.collect.Lists;
+import util.dconcurrent.core.DConcurrent;
 import util.dconcurrent.strategy.RandomStrategy;
 import util.dconcurrent.util.HostAndPort;
 import util.dconcurrent.util.NetUtil;
@@ -15,7 +17,8 @@ import java.util.concurrent.Future;
  * Created by lzz on 2018/3/26.
  */
 public class DExecutors {
-    private List<DConcurrentClient> clientList = new ArrayList<DConcurrentClient>();
+    private static List<DConcurrentClient> clientList = new ArrayList();
+    private static List<DConcurrentClient> activeClientList = new ArrayList();
     private BalanceStrategy balanceStrategy = new RandomStrategy();
     public DExecutors(List<HostAndPort> hostAndPortList){
         clientInit(hostAndPortList);
@@ -24,6 +27,34 @@ public class DExecutors {
     public DExecutors(List<HostAndPort> hostAndPortList, BalanceStrategy balanceStrategy){
         this.balanceStrategy = balanceStrategy;
         clientInit(hostAndPortList);
+    }
+
+    static {
+        Thread checkClientThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        activeClientList = new ArrayList();
+                        for(DConcurrentClient client : clientList){
+                            if( checkService( client.hostAndPort ) ){
+                                activeClientList.add( client );
+                            }
+                        }
+                        if( activeClientList.size() < clientList.size()/(double)2 ){
+                            activeClientList = new ArrayList();
+                            System.out.println("dconcurrent without able client");
+                        }
+                        Thread.sleep(10000);
+                    }catch (Exception ignore){
+
+                    }
+                }
+            }
+        });
+        checkClientThread.setName("dconcurrent-check-client-active");
+        checkClientThread.setDaemon(true);
+        checkClientThread.start();
     }
 
     private void clientInit(List<HostAndPort> hostAndPortList){
@@ -85,28 +116,20 @@ public class DExecutors {
     }
 
     private DConcurrentClient dclient(String balanceKey){
-        List<DConcurrentClient> tmpClientList = new ArrayList<DConcurrentClient>();
-        for(DConcurrentClient client : clientList){
-            if( checkService( client.hostAndPort ) ){
-                tmpClientList.add( client );
-            }
-        }
-        return (DConcurrentClient) balanceStrategy.getClient( tmpClientList, balanceKey );
+        return (DConcurrentClient) balanceStrategy.getClient( activeClientList, balanceKey );
     }
 
     public boolean isLeader(){
         boolean res = false;
         try {
             String localIp = NetUtil.getLocalIp();
-            for(DConcurrentClient client : clientList){
+            for(DConcurrentClient client : activeClientList){
                 HostAndPort hostAndPort = client.hostAndPort;
                 try {
-                    if( checkService(hostAndPort) ){
-                        if( localIp.equals( hostAndPort.getIp() ) && hostAndPort.getPort() == DConcurrentServer.port) {
-                            res = true;
-                        }
-                        break;
+                    if( localIp.equals( hostAndPort.getIp() ) && hostAndPort.getPort() == DConcurrentServer.port) {
+                        res = true;
                     }
+                    break;
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -121,7 +144,7 @@ public class DExecutors {
     }
 
 
-    public boolean checkService(HostAndPort hostAndPort){
+    public static boolean checkService(HostAndPort hostAndPort){
         boolean res = false;
         try {
             DConcurrentClient dConcurrentClient = new DConcurrentClient( hostAndPort );

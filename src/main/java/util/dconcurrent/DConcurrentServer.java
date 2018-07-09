@@ -26,7 +26,7 @@ public class DConcurrentServer {
 
     public static void daemonStart(final int port){
         DConcurrentServer.port = port;
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 DConcurrentServer server = new DConcurrentServer();
@@ -37,7 +37,9 @@ public class DConcurrentServer {
 
                 }
             }
-        }).start();
+        });
+        thread.setName("dconcurrent-daemon-server");
+        thread.start();
     }
     private void start(int port) throws IOException {
         server = ServerBuilder.forPort(port)
