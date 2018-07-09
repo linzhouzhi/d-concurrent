@@ -2,15 +2,19 @@ package util.dconcurrent;
 
 import com.google.common.collect.Lists;
 import util.dconcurrent.core.DConcurrent;
+import util.dconcurrent.strategy.FixStrategy;
 import util.dconcurrent.strategy.RandomStrategy;
+import util.dconcurrent.util.DClassLoader;
 import util.dconcurrent.util.HostAndPort;
 import util.dconcurrent.util.NetUtil;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -24,6 +28,14 @@ public class DExecutors {
         clientInit(hostAndPortList);
     }
 
+    public static  DExecutors newFixDExecutor(List<HostAndPort> hostAndPortList) throws Exception {
+        DClassLoader dClassLoader = new DClassLoader();
+        Class cls = Class.forName("util.dconcurrent.DExecutors", true, dClassLoader);
+        Constructor constructor = cls.getConstructor(List.class, BalanceStrategy.class);
+        DExecutors client = (DExecutors) constructor.newInstance(hostAndPortList, new FixStrategy());
+        System.out.println( client.getClass().getClassLoader() +"ccccccccccc");
+        return client;
+    }
     public DExecutors(List<HostAndPort> hostAndPortList, BalanceStrategy balanceStrategy){
         this.balanceStrategy = balanceStrategy;
         clientInit(hostAndPortList);
@@ -59,6 +71,7 @@ public class DExecutors {
 
     private void clientInit(List<HostAndPort> hostAndPortList){
         for(HostAndPort hostAndPort : hostAndPortList){
+            System.out.println( hostAndPort );
             DConcurrentClient client = new DConcurrentClient(hostAndPort);
             clientList.add( client );
         }

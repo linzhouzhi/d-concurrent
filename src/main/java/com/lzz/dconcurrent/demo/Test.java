@@ -2,7 +2,9 @@ package com.lzz.dconcurrent.demo;
 
 import com.google.common.collect.Sets;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,6 +12,14 @@ import java.util.Set;
  */
 public class Test {
     public static  void main(String[] args){
+        List<String> liststr = new ArrayList();
+        liststr.add("aaa");
+        liststr.add("bbb");
+        liststr.add("ccc");
+        double tt = 3/(double)2;
+        System.out.println( tt );
+        System.out.println( liststr );
+
         String s = "";
         s.hashCode();
 

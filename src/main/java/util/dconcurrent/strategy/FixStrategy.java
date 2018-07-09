@@ -13,6 +13,9 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
 
     @Override
     public Object getClient(List list, String balanceKey) {
+        if( list.size() == 0 ){
+            return null;
+        }
         if( null == balanceKey ){ // 随机取出一个，并不做记录保存
             return super.getClient(list, null);
         }

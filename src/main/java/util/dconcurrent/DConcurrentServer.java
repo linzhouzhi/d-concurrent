@@ -9,11 +9,13 @@ import util.dconcurrent.core.DObject;
 import util.dconcurrent.core.DStatus;
 import util.dconcurrent.util.ByteTransform;
 import io.grpc.stub.StreamObserver;
+import util.dconcurrent.util.DClassLoader;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Created by lzz on 2018/3/26.
@@ -29,8 +31,10 @@ public class DConcurrentServer {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                DConcurrentServer server = new DConcurrentServer();
                 try {
+                    DClassLoader dClassLoader = new DClassLoader();
+                    Class cls = Class.forName("util.dconcurrent.DConcurrentServer", true, dClassLoader);
+                    DConcurrentServer server = (DConcurrentServer) cls.newInstance();
                     server.start(port);
                     server.blockUntilShutdown();
                 }catch (Exception e){
@@ -41,6 +45,11 @@ public class DConcurrentServer {
         thread.setName("dconcurrent-daemon-server");
         thread.start();
     }
+
+    public DConcurrentServer(){
+
+    }
+
     private void start(int port) throws IOException {
         server = ServerBuilder.forPort(port)
                 .addService(new DConcurrentServer.DoncurrentImpl())
