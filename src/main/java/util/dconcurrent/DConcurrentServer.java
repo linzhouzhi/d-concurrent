@@ -9,32 +9,25 @@ import util.dconcurrent.core.DObject;
 import util.dconcurrent.core.DStatus;
 import util.dconcurrent.util.ByteTransform;
 import io.grpc.stub.StreamObserver;
-import util.dconcurrent.util.DClassLoader;
-
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * Created by lzz on 2018/3/26.
  */
 public class DConcurrentServer {
-    public static int port;
     private Server server;
     private static int runCount = 0;
     private static int callCount = 0;
 
     public static void daemonStart(final int port){
-        DConcurrentServer.port = port;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                DConcurrentServer server = new DConcurrentServer();
                 try {
-                    DClassLoader dClassLoader = new DClassLoader();
-                    Class cls = Class.forName("util.dconcurrent.DConcurrentServer", true, dClassLoader);
-                    DConcurrentServer server = (DConcurrentServer) cls.newInstance();
                     server.start(port);
                     server.blockUntilShutdown();
                 }catch (Exception e){
@@ -98,7 +91,7 @@ public class DConcurrentServer {
                 runMethod.setAccessible( true );
                 runMethod.invoke( runObject ) ;
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }
 
@@ -140,10 +133,13 @@ public class DConcurrentServer {
         if( paramClassByte.size() != 0 ){
             Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
             Constructor constructorObj = runClass.getConstructor( paramClass ); //DmetaParam.class
+            constructorObj.setAccessible(true);
             Object metaObject = ByteTransform.unSerialized(metaParam.getValue().toStringUtf8(), paramClass);
             runObject = constructorObj.newInstance( metaObject );
         }else{
-            runObject = runClass.newInstance();
+            Constructor constructor = runClass.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            runObject = constructor.newInstance();
         }
         return runObject;
     }

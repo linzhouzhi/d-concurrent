@@ -1,44 +1,64 @@
 package util.dconcurrent;
 
-import com.google.common.collect.Lists;
-import util.dconcurrent.core.DConcurrent;
+import util.dconcurrent.strategy.FailStrategy;
 import util.dconcurrent.strategy.FixStrategy;
 import util.dconcurrent.strategy.RandomStrategy;
-import util.dconcurrent.util.DClassLoader;
 import util.dconcurrent.util.HostAndPort;
 import util.dconcurrent.util.NetUtil;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
  * Created by lzz on 2018/3/26.
  */
 public class DExecutors {
+    private static int serverPort;
     private static List<DConcurrentClient> clientList = new ArrayList();
     private static List<DConcurrentClient> activeClientList = new ArrayList();
     private BalanceStrategy balanceStrategy = new RandomStrategy();
-    public DExecutors(List<HostAndPort> hostAndPortList){
-        clientInit(hostAndPortList);
+    public DExecutors(){
+        //ignore
     }
 
-    public static  DExecutors newFixDExecutor(List<HostAndPort> hostAndPortList) throws Exception {
-        DClassLoader dClassLoader = new DClassLoader();
-        Class cls = Class.forName("util.dconcurrent.DExecutors", true, dClassLoader);
-        Constructor constructor = cls.getConstructor(List.class, BalanceStrategy.class);
-        DExecutors client = (DExecutors) constructor.newInstance(hostAndPortList, new FixStrategy());
-        System.out.println( client.getClass().getClassLoader() +"ccccccccccc");
-        return client;
+    /**
+     *  公平调度策略，可以保证每台机器的调用次数是一样多
+     * @param hostAndPortList
+     * @return
+     */
+    public static  DExecutors newFailDExecutor(List<HostAndPort> hostAndPortList){
+        return new DExecutors(hostAndPortList, new FailStrategy());
     }
+
+    /**
+     * 随机调度策略
+     * @param hostAndPortList
+     * @return
+     */
+    public static  DExecutors newRandomDExecutor(List<HostAndPort> hostAndPortList){
+        return new DExecutors(hostAndPortList, new RandomStrategy());
+    }
+
+    /**
+     * 固定调度策略，保证同一个 banlanceKey 一定会落在固定的机器上调度
+     * @param hostAndPortList
+     * @return
+     */
+    public static  DExecutors newFixDExecutor(List<HostAndPort> hostAndPortList){
+        return new DExecutors(hostAndPortList, new FixStrategy());
+    }
+
     public DExecutors(List<HostAndPort> hostAndPortList, BalanceStrategy balanceStrategy){
         this.balanceStrategy = balanceStrategy;
         clientInit(hostAndPortList);
+    }
+
+    public static void serverStart(int port){
+        serverPort = port;
+        DConcurrentServer.daemonStart( serverPort );
     }
 
     static {
@@ -76,6 +96,7 @@ public class DExecutors {
             clientList.add( client );
         }
     }
+
     public DFuture submit(final DCallable callable, String balanceKey) {
         Method runMethod = null;
         try {
@@ -95,6 +116,7 @@ public class DExecutors {
         DFuture dfuture = new DFuture(future, returnType);
         return dfuture;
     }
+
     public DFuture submit(final DCallable callable) {
         return submit(callable, null);
     }
@@ -108,6 +130,7 @@ public class DExecutors {
         byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
         dclient(balanceKey).run( className, metaParam,  metaParamClass);
     }
+
     public void submit(final Runnable runnable){
         submit(runnable, null);
     }
@@ -139,7 +162,7 @@ public class DExecutors {
             for(DConcurrentClient client : activeClientList){
                 HostAndPort hostAndPort = client.hostAndPort;
                 try {
-                    if( localIp.equals( hostAndPort.getIp() ) && hostAndPort.getPort() == DConcurrentServer.port) {
+                    if( localIp.equals( hostAndPort.getIp() ) && hostAndPort.getPort() == this.serverPort) {
                         res = true;
                     }
                     break;
@@ -147,7 +170,7 @@ public class DExecutors {
                     e.printStackTrace();
                 }
             }
-            System.out.println("leader..................................." + localIp + ":" + DConcurrentServer.port + " is " + res);
+            System.out.println("leader..................................." + localIp + ":" + this.serverPort + " is " + res);
             // 不是 leader 10 秒后再试，因为有可能是其它节点挂了
             Thread.sleep(10000);
         }catch (Exception e){
@@ -156,7 +179,6 @@ public class DExecutors {
         return res;
     }
 
-
     public static boolean checkService(HostAndPort hostAndPort){
         boolean res = false;
         try {
@@ -164,7 +186,7 @@ public class DExecutors {
             dConcurrentClient.getStatus();
             dConcurrentClient.shutdown();
             res = true;
-        }catch (Exception e){
+        }catch (Exception ignore){
 
         }
         return res;

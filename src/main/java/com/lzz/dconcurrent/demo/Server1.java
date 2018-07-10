@@ -1,37 +1,48 @@
 package com.lzz.dconcurrent.demo;
 
-import util.dconcurrent.BalanceStrategy;
-import util.dconcurrent.DConcurrentServer;
+import util.dconcurrent.DCallable;
 import util.dconcurrent.DExecutors;
 import util.dconcurrent.DFuture;
-import util.dconcurrent.strategy.FixStrategy;
-import util.dconcurrent.util.DClassLoader;
 import util.dconcurrent.util.HostAndPort;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by gl49 on 2018/7/4.
  */
 public class Server1 {
+    private static List list = new ArrayList();
     public static void main(String[] args) throws Exception {
-        DConcurrentServer.daemonStart(50051);
         List<HostAndPort> hostAndPortList = new ArrayList<HostAndPort>();
         HostAndPort hostAndPort1 = new HostAndPort("10.16.164.33", 50051);
         HostAndPort hostAndPort2 = new HostAndPort("10.16.164.33", 50052);
         hostAndPortList.add( hostAndPort1 );
         hostAndPortList.add( hostAndPort2 );
 
+        DExecutors.serverStart( 50051 );
         DExecutors client = DExecutors.newFixDExecutor(hostAndPortList);
-
         while (true){
             if( !client.isLeader() ){
                 System.out.println( "is not leader" );
                 continue;
             }
+
+            list.add("lllllaalalla");
+            list.add("goog monitor");
+            client.submit(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("good flexxxxx " + list);
+                }
+            });
+
+            DFuture<List> futureList = client.submit(new DCallable() {
+                @Override
+                protected Object call() {
+                    return list;
+                }
+            });
+            System.out.println( "------dfuture " + futureList.get() );
 
             DmetaParamTest dmetaParam = new DmetaParamTest();
             client.submit(new TestRuannable( dmetaParam ) );
