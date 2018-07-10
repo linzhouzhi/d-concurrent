@@ -1,79 +1,41 @@
 package util.dconcurrent.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import util.dconcurrent.DExecutors;
+import util.dconcurrent.DExecutorsManager;
 import java.io.FileInputStream;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.WritableByteChannel;
+import java.util.ArrayList;
+import java.util.List;
 // https://blog.csdn.net/idontwantobe/article/details/48497465
 
 /**
  * Created by gl49 on 2018/7/9.
  */
-public class DClassLoader extends ClassLoader
-{
-    public DClassLoader()
-    {
+public class DClassLoader extends ClassLoader {
+    private String classPath;
 
+    public DClassLoader(String classPath) {
+        this.classPath = classPath;
     }
 
-    public DClassLoader(ClassLoader parent)
-    {
-        super(parent);
-    }
-
-    protected Class<?> loadClass(String name, boolean resolve)
-            throws ClassNotFoundException
-    {
-        return findClass(name);
-    }
-
-    protected Class<?> findClass(String name) throws ClassNotFoundException
-    {
-        File file = getClassFile(name);
-        try
-        {
-            byte[] bytes = getClassBytes(file);
-            Class<?> c = this.defineClass(name, bytes, 0, bytes.length);
-            return c;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return super.findClass(name);
-    }
-
-    private File getClassFile(String name)
-    {
-        File file = new File( name );
-        return file;
-    }
-
-    private byte[] getClassBytes(File file) throws Exception
-    {
-        // 这里要读入.class的字节，因此要使用字节流
-        FileInputStream fis = new FileInputStream(file);
-        FileChannel fc = fis.getChannel();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        WritableByteChannel wbc = Channels.newChannel(baos);
-        ByteBuffer by = ByteBuffer.allocate(1024);
-
-        while (true)
-        {
-            int i = fc.read(by);
-            if (i == 0 || i == -1)
-                break;
-            by.flip();
-            wbc.write(by);
-            by.clear();
-        }
-
+    private byte[] loadByte(String name) throws Exception {
+        name = name.replaceAll("\\.", "/");
+        FileInputStream fis = new FileInputStream(classPath + "/" + name + ".class");
+        int len = fis.available();
+        byte[] data = new byte[len];
+        fis.read(data);
         fis.close();
+        return data;
 
-        return baos.toByteArray();
     }
+
+    public Class<?> findClass(String name) throws ClassNotFoundException {
+        try {
+            byte[] data = loadByte(name);
+            return defineClass(name, data, 0, data.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ClassNotFoundException();
+        }
+    }
+    
 }
