@@ -1,5 +1,6 @@
 package util.dconcurrent;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import util.dconcurrent.util.HostAndPort;
@@ -17,7 +18,7 @@ import java.util.concurrent.*;
 public class DConcurrentClient {
     private ExecutorService threadPool = Executors.newCachedThreadPool();
     private final ManagedChannel channel;
-    private final DConcurrentServerGrpc.DConcurrentServerBlockingStub blockingStub;
+    private final DConcurrentServerGrpc.DConcurrentServerFutureStub futureStub;
     public HostAndPort hostAndPort;
     public DConcurrentClient(HostAndPort hostAndPort){
         this.hostAndPort = hostAndPort;
@@ -25,7 +26,7 @@ public class DConcurrentClient {
                 .usePlaintext(true)
                 .keepAliveWithoutCalls(true)
                 .build();
-        blockingStub = DConcurrentServerGrpc.newBlockingStub( channel );
+        futureStub = DConcurrentServerGrpc.newFutureStub(channel );
     }
 
     public boolean isShutdown(){
@@ -36,30 +37,20 @@ public class DConcurrentClient {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    public Future<byte[]> call(final byte[] className, final byte[] metaParam, final byte[] metaParamClass) {
-        Future<byte[]> future = threadPool.submit(new Callable<byte[]>() {
-            public byte[] call() throws Exception {
-                DObject request = builderRequest(className, metaParam, metaParamClass);
-                DObject response = blockingStub.call(request);
-                return response.getClassName().getValue().toByteArray();
-            }
-        });
-        return  future;
+    public ListenableFuture<DObject> call(final byte[] className, final byte[] metaParam, final byte[] metaParamClass) {
+        DObject request = builderRequest(className, metaParam, metaParamClass);
+        ListenableFuture<DObject> response = futureStub.call(request);
+        return response;
     }
 
 
     public void run(final byte[] className, final byte[] metaParam, final byte[] metaParamClass){
-        threadPool.submit(new Runnable() {
-            @Override
-            public void run() {
-                DObject request = builderRequest(className, metaParam, metaParamClass);
-                blockingStub.run(request);
-            }
-        });
+        DObject request = builderRequest(className, metaParam, metaParamClass);
+        futureStub.run(request);
     }
 
-    public Status getStatus(){
-        DStatus dStatus = blockingStub.getStat( Any.getDefaultInstance() );
+    public Status getStatus() throws ExecutionException, InterruptedException {
+        DStatus dStatus = futureStub.getStat( Any.getDefaultInstance() ).get();
         Status status = new Status();
         status.setRunCount( dStatus.getRunCount() );
         status.setCallCount( dStatus.getCallCount() );
@@ -87,6 +78,5 @@ public class DConcurrentClient {
         DObject request = builder.build();
         return request;
     }
-
 
 }
