@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 /**
  * Created by lzz on 2018/3/26.
@@ -137,9 +138,17 @@ public class DConcurrentServer {
             Object metaObject = ByteTransform.unSerialized(metaParam.getValue().toStringUtf8(), paramClass);
             runObject = constructorObj.newInstance( metaObject );
         }else{
-            Constructor constructor = runClass.getDeclaredConstructor();
+            //测试用例会默认传递一个参数进来
+            Constructor[] constructors = runClass.getDeclaredConstructors();
+            Constructor constructor = constructors[0];
             constructor.setAccessible(true);
-            runObject = constructor.newInstance();
+            Parameter[] params = constructor.getParameters();
+            if( null != params ){
+                String[] paramStrArr = new String[params.length];
+                runObject = constructor.newInstance(paramStrArr);
+            }else{
+                runObject = constructor.newInstance();
+            }
         }
         return runObject;
     }
