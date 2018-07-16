@@ -7,27 +7,38 @@ package util.dconcurrent.core;
  * Protobuf type {@code dconcurrent.DObject}
  */
 public  final class DObject extends
-    com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:dconcurrent.DObject)
-    DObjectOrBuilder {
+    com.google.protobuf.GeneratedMessage
+    implements util.dconcurrent.core.DObjectOrBuilder {
   // Use DObject.newBuilder() to construct.
-  private DObject(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  private DObject(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
     super(builder);
+    this.unknownFields = builder.getUnknownFields();
   }
-  private DObject() {
+  private DObject(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+  private static final DObject defaultInstance;
+  public static DObject getDefaultInstance() {
+    return defaultInstance;
   }
 
-  @Override
+  public DObject getDefaultInstanceForType() {
+    return defaultInstance;
+  }
+
+  private final com.google.protobuf.UnknownFieldSet unknownFields;
+  @java.lang.Override
   public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      getUnknownFields() {
+    return this.unknownFields;
   }
   private DObject(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
+    initFields();
     int mutable_bitField0_ = 0;
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
       boolean done = false;
       while (!done) {
@@ -37,48 +48,25 @@ public  final class DObject extends
             done = true;
             break;
           default: {
-            if (!input.skipField(tag)) {
+            if (!parseUnknownField(input, unknownFields,
+                                   extensionRegistry, tag)) {
               done = true;
             }
             break;
           }
           case 10: {
-            com.google.protobuf.Any.Builder subBuilder = null;
-            if (className_ != null) {
-              subBuilder = className_.toBuilder();
-            }
-            className_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(className_);
-              className_ = subBuilder.buildPartial();
-            }
-
+            bitField0_ |= 0x00000001;
+            className_ = input.readBytes();
             break;
           }
           case 18: {
-            com.google.protobuf.Any.Builder subBuilder = null;
-            if (metaParam_ != null) {
-              subBuilder = metaParam_.toBuilder();
-            }
-            metaParam_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(metaParam_);
-              metaParam_ = subBuilder.buildPartial();
-            }
-
+            bitField0_ |= 0x00000002;
+            metaParam_ = input.readBytes();
             break;
           }
           case 26: {
-            com.google.protobuf.Any.Builder subBuilder = null;
-            if (metaParamClass_ != null) {
-              subBuilder = metaParamClass_.toBuilder();
-            }
-            metaParamClass_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(metaParamClass_);
-              metaParamClass_ = subBuilder.buildPartial();
-            }
-
+            bitField0_ |= 0x00000004;
+            metaParamClass_ = input.readBytes();
             break;
           }
         }
@@ -87,91 +75,97 @@ public  final class DObject extends
       throw e.setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
+          e.getMessage()).setUnfinishedMessage(this);
     } finally {
+      this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return DConcurrent.internal_static_dconcurrent_DObject_descriptor;
+    return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DObject_descriptor;
   }
 
-  protected FieldAccessorTable
+  protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return DConcurrent.internal_static_dconcurrent_DObject_fieldAccessorTable
+    return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DObject_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            DObject.class, Builder.class);
+            util.dconcurrent.core.DObject.class, util.dconcurrent.core.DObject.Builder.class);
   }
 
+  public static com.google.protobuf.Parser<DObject> PARSER =
+      new com.google.protobuf.AbstractParser<DObject>() {
+    public DObject parsePartialFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return new DObject(input, extensionRegistry);
+    }
+  };
+
+  @java.lang.Override
+  public com.google.protobuf.Parser<DObject> getParserForType() {
+    return PARSER;
+  }
+
+  private int bitField0_;
+  // optional bytes className = 1;
   public static final int CLASSNAME_FIELD_NUMBER = 1;
-  private com.google.protobuf.Any className_;
+  private com.google.protobuf.ByteString className_;
   /**
-   * <code>.google.protobuf.Any className = 1;</code>
+   * <code>optional bytes className = 1;</code>
    */
   public boolean hasClassName() {
-    return className_ != null;
+    return ((bitField0_ & 0x00000001) == 0x00000001);
   }
   /**
-   * <code>.google.protobuf.Any className = 1;</code>
+   * <code>optional bytes className = 1;</code>
    */
-  public com.google.protobuf.Any getClassName() {
-    return className_ == null ? com.google.protobuf.Any.getDefaultInstance() : className_;
-  }
-  /**
-   * <code>.google.protobuf.Any className = 1;</code>
-   */
-  public com.google.protobuf.AnyOrBuilder getClassNameOrBuilder() {
-    return getClassName();
+  public com.google.protobuf.ByteString getClassName() {
+    return className_;
   }
 
+  // optional bytes metaParam = 2;
   public static final int METAPARAM_FIELD_NUMBER = 2;
-  private com.google.protobuf.Any metaParam_;
+  private com.google.protobuf.ByteString metaParam_;
   /**
-   * <code>.google.protobuf.Any metaParam = 2;</code>
+   * <code>optional bytes metaParam = 2;</code>
    */
   public boolean hasMetaParam() {
-    return metaParam_ != null;
+    return ((bitField0_ & 0x00000002) == 0x00000002);
   }
   /**
-   * <code>.google.protobuf.Any metaParam = 2;</code>
+   * <code>optional bytes metaParam = 2;</code>
    */
-  public com.google.protobuf.Any getMetaParam() {
-    return metaParam_ == null ? com.google.protobuf.Any.getDefaultInstance() : metaParam_;
-  }
-  /**
-   * <code>.google.protobuf.Any metaParam = 2;</code>
-   */
-  public com.google.protobuf.AnyOrBuilder getMetaParamOrBuilder() {
-    return getMetaParam();
+  public com.google.protobuf.ByteString getMetaParam() {
+    return metaParam_;
   }
 
+  // optional bytes metaParamClass = 3;
   public static final int METAPARAMCLASS_FIELD_NUMBER = 3;
-  private com.google.protobuf.Any metaParamClass_;
+  private com.google.protobuf.ByteString metaParamClass_;
   /**
-   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   * <code>optional bytes metaParamClass = 3;</code>
    */
   public boolean hasMetaParamClass() {
-    return metaParamClass_ != null;
+    return ((bitField0_ & 0x00000004) == 0x00000004);
   }
   /**
-   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   * <code>optional bytes metaParamClass = 3;</code>
    */
-  public com.google.protobuf.Any getMetaParamClass() {
-    return metaParamClass_ == null ? com.google.protobuf.Any.getDefaultInstance() : metaParamClass_;
-  }
-  /**
-   * <code>.google.protobuf.Any metaParamClass = 3;</code>
-   */
-  public com.google.protobuf.AnyOrBuilder getMetaParamClassOrBuilder() {
-    return getMetaParamClass();
+  public com.google.protobuf.ByteString getMetaParamClass() {
+    return metaParamClass_;
   }
 
+  private void initFields() {
+    className_ = com.google.protobuf.ByteString.EMPTY;
+    metaParam_ = com.google.protobuf.ByteString.EMPTY;
+    metaParamClass_ = com.google.protobuf.ByteString.EMPTY;
+  }
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
+    if (isInitialized != -1) return isInitialized == 1;
 
     memoizedIsInitialized = 1;
     return true;
@@ -179,177 +173,112 @@ public  final class DObject extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (className_ != null) {
-      output.writeMessage(1, getClassName());
+    getSerializedSize();
+    if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      output.writeBytes(1, className_);
     }
-    if (metaParam_ != null) {
-      output.writeMessage(2, getMetaParam());
+    if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      output.writeBytes(2, metaParam_);
     }
-    if (metaParamClass_ != null) {
-      output.writeMessage(3, getMetaParamClass());
+    if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      output.writeBytes(3, metaParamClass_);
     }
+    getUnknownFields().writeTo(output);
   }
 
+  private int memoizedSerializedSize = -1;
   public int getSerializedSize() {
-    int size = memoizedSize;
+    int size = memoizedSerializedSize;
     if (size != -1) return size;
 
     size = 0;
-    if (className_ != null) {
+    if (((bitField0_ & 0x00000001) == 0x00000001)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, getClassName());
+        .computeBytesSize(1, className_);
     }
-    if (metaParam_ != null) {
+    if (((bitField0_ & 0x00000002) == 0x00000002)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getMetaParam());
+        .computeBytesSize(2, metaParam_);
     }
-    if (metaParamClass_ != null) {
+    if (((bitField0_ & 0x00000004) == 0x00000004)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, getMetaParamClass());
+        .computeBytesSize(3, metaParamClass_);
     }
-    memoizedSize = size;
+    size += getUnknownFields().getSerializedSize();
+    memoizedSerializedSize = size;
     return size;
   }
 
   private static final long serialVersionUID = 0L;
-  @Override
-  public boolean equals(final Object obj) {
-    if (obj == this) {
-     return true;
-    }
-    if (!(obj instanceof DObject)) {
-      return super.equals(obj);
-    }
-    DObject other = (DObject) obj;
-
-    boolean result = true;
-    result = result && (hasClassName() == other.hasClassName());
-    if (hasClassName()) {
-      result = result && getClassName()
-          .equals(other.getClassName());
-    }
-    result = result && (hasMetaParam() == other.hasMetaParam());
-    if (hasMetaParam()) {
-      result = result && getMetaParam()
-          .equals(other.getMetaParam());
-    }
-    result = result && (hasMetaParamClass() == other.hasMetaParamClass());
-    if (hasMetaParamClass()) {
-      result = result && getMetaParamClass()
-          .equals(other.getMetaParamClass());
-    }
-    return result;
+  @java.lang.Override
+  protected java.lang.Object writeReplace()
+      throws java.io.ObjectStreamException {
+    return super.writeReplace();
   }
 
-  @Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasClassName()) {
-      hash = (37 * hash) + CLASSNAME_FIELD_NUMBER;
-      hash = (53 * hash) + getClassName().hashCode();
-    }
-    if (hasMetaParam()) {
-      hash = (37 * hash) + METAPARAM_FIELD_NUMBER;
-      hash = (53 * hash) + getMetaParam().hashCode();
-    }
-    if (hasMetaParamClass()) {
-      hash = (37 * hash) + METAPARAMCLASS_FIELD_NUMBER;
-      hash = (53 * hash) + getMetaParamClass().hashCode();
-    }
-    hash = (29 * hash) + unknownFields.hashCode();
-    memoizedHashCode = hash;
-    return hash;
-  }
-
-  public static DObject parseFrom(
-      java.nio.ByteBuffer data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static DObject parseFrom(
-      java.nio.ByteBuffer data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static DObject parseFrom(
+  public static util.dconcurrent.core.DObject parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static DObject parseFrom(
+  public static util.dconcurrent.core.DObject parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static DObject parseFrom(byte[] data)
+  public static util.dconcurrent.core.DObject parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static DObject parseFrom(
+  public static util.dconcurrent.core.DObject parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static DObject parseFrom(java.io.InputStream input)
+  public static util.dconcurrent.core.DObject parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
+    return PARSER.parseFrom(input);
   }
-  public static DObject parseFrom(
+  public static util.dconcurrent.core.DObject parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
+    return PARSER.parseFrom(input, extensionRegistry);
   }
-  public static DObject parseDelimitedFrom(java.io.InputStream input)
+  public static util.dconcurrent.core.DObject parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input);
+    return PARSER.parseDelimitedFrom(input);
   }
-  public static DObject parseDelimitedFrom(
+  public static util.dconcurrent.core.DObject parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    return PARSER.parseDelimitedFrom(input, extensionRegistry);
   }
-  public static DObject parseFrom(
+  public static util.dconcurrent.core.DObject parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
+    return PARSER.parseFrom(input);
   }
-  public static DObject parseFrom(
+  public static util.dconcurrent.core.DObject parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
+    return PARSER.parseFrom(input, extensionRegistry);
   }
 
+  public static Builder newBuilder() { return Builder.create(); }
   public Builder newBuilderForType() { return newBuilder(); }
-  public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
+  public static Builder newBuilder(util.dconcurrent.core.DObject prototype) {
+    return newBuilder().mergeFrom(prototype);
   }
-  public static Builder newBuilder(DObject prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-  }
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE
-        ? new Builder() : new Builder().mergeFrom(this);
-  }
+  public Builder toBuilder() { return newBuilder(this); }
 
-  @Override
+  @java.lang.Override
   protected Builder newBuilderForType(
-      BuilderParent parent) {
+      com.google.protobuf.GeneratedMessage.BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -357,144 +286,112 @@ public  final class DObject extends
    * Protobuf type {@code dconcurrent.DObject}
    */
   public static final class Builder extends
-      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:dconcurrent.DObject)
-          DObjectOrBuilder {
+      com.google.protobuf.GeneratedMessage.Builder<Builder>
+     implements util.dconcurrent.core.DObjectOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return DConcurrent.internal_static_dconcurrent_DObject_descriptor;
+      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DObject_descriptor;
     }
 
-    protected FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return DConcurrent.internal_static_dconcurrent_DObject_fieldAccessorTable
+      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DObject_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              DObject.class, Builder.class);
+              util.dconcurrent.core.DObject.class, util.dconcurrent.core.DObject.Builder.class);
     }
 
-    // Construct using io.grpc.distribute.DObject.newBuilder()
+    // Construct using util.dconcurrent.core.DObject.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
 
     private Builder(
-        BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
     private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
+      if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
       }
     }
+    private static Builder create() {
+      return new Builder();
+    }
+
     public Builder clear() {
       super.clear();
-      if (classNameBuilder_ == null) {
-        className_ = null;
-      } else {
-        className_ = null;
-        classNameBuilder_ = null;
-      }
-      if (metaParamBuilder_ == null) {
-        metaParam_ = null;
-      } else {
-        metaParam_ = null;
-        metaParamBuilder_ = null;
-      }
-      if (metaParamClassBuilder_ == null) {
-        metaParamClass_ = null;
-      } else {
-        metaParamClass_ = null;
-        metaParamClassBuilder_ = null;
-      }
+      className_ = com.google.protobuf.ByteString.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      metaParam_ = com.google.protobuf.ByteString.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      metaParamClass_ = com.google.protobuf.ByteString.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000004);
       return this;
+    }
+
+    public Builder clone() {
+      return create().mergeFrom(buildPartial());
     }
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return DConcurrent.internal_static_dconcurrent_DObject_descriptor;
+      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DObject_descriptor;
     }
 
-    public DObject getDefaultInstanceForType() {
-      return DObject.getDefaultInstance();
+    public util.dconcurrent.core.DObject getDefaultInstanceForType() {
+      return util.dconcurrent.core.DObject.getDefaultInstance();
     }
 
-    public DObject build() {
-      DObject result = buildPartial();
+    public util.dconcurrent.core.DObject build() {
+      util.dconcurrent.core.DObject result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public DObject buildPartial() {
-      DObject result = new DObject(this);
-      if (classNameBuilder_ == null) {
-        result.className_ = className_;
-      } else {
-        result.className_ = classNameBuilder_.build();
+    public util.dconcurrent.core.DObject buildPartial() {
+      util.dconcurrent.core.DObject result = new util.dconcurrent.core.DObject(this);
+      int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
+      if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        to_bitField0_ |= 0x00000001;
       }
-      if (metaParamBuilder_ == null) {
-        result.metaParam_ = metaParam_;
-      } else {
-        result.metaParam_ = metaParamBuilder_.build();
+      result.className_ = className_;
+      if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+        to_bitField0_ |= 0x00000002;
       }
-      if (metaParamClassBuilder_ == null) {
-        result.metaParamClass_ = metaParamClass_;
-      } else {
-        result.metaParamClass_ = metaParamClassBuilder_.build();
+      result.metaParam_ = metaParam_;
+      if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+        to_bitField0_ |= 0x00000004;
       }
+      result.metaParamClass_ = metaParamClass_;
+      result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
 
-    public Builder clone() {
-      return (Builder) super.clone();
-    }
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return (Builder) super.setField(field, value);
-    }
-    public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
-    }
-    public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
-    }
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
-    }
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return (Builder) super.addRepeatedField(field, value);
-    }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof DObject) {
-        return mergeFrom((DObject)other);
+      if (other instanceof util.dconcurrent.core.DObject) {
+        return mergeFrom((util.dconcurrent.core.DObject)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(DObject other) {
-      if (other == DObject.getDefaultInstance()) return this;
+    public Builder mergeFrom(util.dconcurrent.core.DObject other) {
+      if (other == util.dconcurrent.core.DObject.getDefaultInstance()) return this;
       if (other.hasClassName()) {
-        mergeClassName(other.getClassName());
+        setClassName(other.getClassName());
       }
       if (other.hasMetaParam()) {
-        mergeMetaParam(other.getMetaParam());
+        setMetaParam(other.getMetaParam());
       }
       if (other.hasMetaParamClass()) {
-        mergeMetaParamClass(other.getMetaParamClass());
+        setMetaParamClass(other.getMetaParamClass());
       }
-      onChanged();
+      this.mergeUnknownFields(other.getUnknownFields());
       return this;
     }
 
@@ -506,12 +403,12 @@ public  final class DObject extends
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      DObject parsedMessage = null;
+      util.dconcurrent.core.DObject parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (DObject) e.getUnfinishedMessage();
-        throw e.unwrapIOException();
+        parsedMessage = (util.dconcurrent.core.DObject) e.getUnfinishedMessage();
+        throw e;
       } finally {
         if (parsedMessage != null) {
           mergeFrom(parsedMessage);
@@ -519,403 +416,124 @@ public  final class DObject extends
       }
       return this;
     }
+    private int bitField0_;
 
-    private com.google.protobuf.Any className_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> classNameBuilder_;
+    // optional bytes className = 1;
+    private com.google.protobuf.ByteString className_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>.google.protobuf.Any className = 1;</code>
+     * <code>optional bytes className = 1;</code>
      */
     public boolean hasClassName() {
-      return classNameBuilder_ != null || className_ != null;
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>.google.protobuf.Any className = 1;</code>
+     * <code>optional bytes className = 1;</code>
      */
-    public com.google.protobuf.Any getClassName() {
-      if (classNameBuilder_ == null) {
-        return className_ == null ? com.google.protobuf.Any.getDefaultInstance() : className_;
-      } else {
-        return classNameBuilder_.getMessage();
-      }
+    public com.google.protobuf.ByteString getClassName() {
+      return className_;
     }
     /**
-     * <code>.google.protobuf.Any className = 1;</code>
+     * <code>optional bytes className = 1;</code>
      */
-    public Builder setClassName(com.google.protobuf.Any value) {
-      if (classNameBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        className_ = value;
-        onChanged();
-      } else {
-        classNameBuilder_.setMessage(value);
-      }
-
+    public Builder setClassName(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+      className_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Any className = 1;</code>
-     */
-    public Builder setClassName(
-        com.google.protobuf.Any.Builder builderForValue) {
-      if (classNameBuilder_ == null) {
-        className_ = builderForValue.build();
-        onChanged();
-      } else {
-        classNameBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any className = 1;</code>
-     */
-    public Builder mergeClassName(com.google.protobuf.Any value) {
-      if (classNameBuilder_ == null) {
-        if (className_ != null) {
-          className_ =
-            com.google.protobuf.Any.newBuilder(className_).mergeFrom(value).buildPartial();
-        } else {
-          className_ = value;
-        }
-        onChanged();
-      } else {
-        classNameBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any className = 1;</code>
+     * <code>optional bytes className = 1;</code>
      */
     public Builder clearClassName() {
-      if (classNameBuilder_ == null) {
-        className_ = null;
-        onChanged();
-      } else {
-        className_ = null;
-        classNameBuilder_ = null;
-      }
-
+      bitField0_ = (bitField0_ & ~0x00000001);
+      className_ = getDefaultInstance().getClassName();
+      onChanged();
       return this;
     }
-    /**
-     * <code>.google.protobuf.Any className = 1;</code>
-     */
-    public com.google.protobuf.Any.Builder getClassNameBuilder() {
-      
-      onChanged();
-      return getClassNameFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.google.protobuf.Any className = 1;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getClassNameOrBuilder() {
-      if (classNameBuilder_ != null) {
-        return classNameBuilder_.getMessageOrBuilder();
-      } else {
-        return className_ == null ?
-            com.google.protobuf.Any.getDefaultInstance() : className_;
-      }
-    }
-    /**
-     * <code>.google.protobuf.Any className = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
-        getClassNameFieldBuilder() {
-      if (classNameBuilder_ == null) {
-        classNameBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                getClassName(),
-                getParentForChildren(),
-                isClean());
-        className_ = null;
-      }
-      return classNameBuilder_;
-    }
 
-    private com.google.protobuf.Any metaParam_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> metaParamBuilder_;
+    // optional bytes metaParam = 2;
+    private com.google.protobuf.ByteString metaParam_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
+     * <code>optional bytes metaParam = 2;</code>
      */
     public boolean hasMetaParam() {
-      return metaParamBuilder_ != null || metaParam_ != null;
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
+     * <code>optional bytes metaParam = 2;</code>
      */
-    public com.google.protobuf.Any getMetaParam() {
-      if (metaParamBuilder_ == null) {
-        return metaParam_ == null ? com.google.protobuf.Any.getDefaultInstance() : metaParam_;
-      } else {
-        return metaParamBuilder_.getMessage();
-      }
+    public com.google.protobuf.ByteString getMetaParam() {
+      return metaParam_;
     }
     /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
+     * <code>optional bytes metaParam = 2;</code>
      */
-    public Builder setMetaParam(com.google.protobuf.Any value) {
-      if (metaParamBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        metaParam_ = value;
-        onChanged();
-      } else {
-        metaParamBuilder_.setMessage(value);
-      }
-
+    public Builder setMetaParam(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+      metaParam_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
-     */
-    public Builder setMetaParam(
-        com.google.protobuf.Any.Builder builderForValue) {
-      if (metaParamBuilder_ == null) {
-        metaParam_ = builderForValue.build();
-        onChanged();
-      } else {
-        metaParamBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
-     */
-    public Builder mergeMetaParam(com.google.protobuf.Any value) {
-      if (metaParamBuilder_ == null) {
-        if (metaParam_ != null) {
-          metaParam_ =
-            com.google.protobuf.Any.newBuilder(metaParam_).mergeFrom(value).buildPartial();
-        } else {
-          metaParam_ = value;
-        }
-        onChanged();
-      } else {
-        metaParamBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
+     * <code>optional bytes metaParam = 2;</code>
      */
     public Builder clearMetaParam() {
-      if (metaParamBuilder_ == null) {
-        metaParam_ = null;
-        onChanged();
-      } else {
-        metaParam_ = null;
-        metaParamBuilder_ = null;
-      }
-
+      bitField0_ = (bitField0_ & ~0x00000002);
+      metaParam_ = getDefaultInstance().getMetaParam();
+      onChanged();
       return this;
     }
-    /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
-     */
-    public com.google.protobuf.Any.Builder getMetaParamBuilder() {
-      
-      onChanged();
-      return getMetaParamFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getMetaParamOrBuilder() {
-      if (metaParamBuilder_ != null) {
-        return metaParamBuilder_.getMessageOrBuilder();
-      } else {
-        return metaParam_ == null ?
-            com.google.protobuf.Any.getDefaultInstance() : metaParam_;
-      }
-    }
-    /**
-     * <code>.google.protobuf.Any metaParam = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
-        getMetaParamFieldBuilder() {
-      if (metaParamBuilder_ == null) {
-        metaParamBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                getMetaParam(),
-                getParentForChildren(),
-                isClean());
-        metaParam_ = null;
-      }
-      return metaParamBuilder_;
-    }
 
-    private com.google.protobuf.Any metaParamClass_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> metaParamClassBuilder_;
+    // optional bytes metaParamClass = 3;
+    private com.google.protobuf.ByteString metaParamClass_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
+     * <code>optional bytes metaParamClass = 3;</code>
      */
     public boolean hasMetaParamClass() {
-      return metaParamClassBuilder_ != null || metaParamClass_ != null;
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
+     * <code>optional bytes metaParamClass = 3;</code>
      */
-    public com.google.protobuf.Any getMetaParamClass() {
-      if (metaParamClassBuilder_ == null) {
-        return metaParamClass_ == null ? com.google.protobuf.Any.getDefaultInstance() : metaParamClass_;
-      } else {
-        return metaParamClassBuilder_.getMessage();
-      }
+    public com.google.protobuf.ByteString getMetaParamClass() {
+      return metaParamClass_;
     }
     /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
+     * <code>optional bytes metaParamClass = 3;</code>
      */
-    public Builder setMetaParamClass(com.google.protobuf.Any value) {
-      if (metaParamClassBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        metaParamClass_ = value;
-        onChanged();
-      } else {
-        metaParamClassBuilder_.setMessage(value);
-      }
-
+    public Builder setMetaParamClass(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+      metaParamClass_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
-     */
-    public Builder setMetaParamClass(
-        com.google.protobuf.Any.Builder builderForValue) {
-      if (metaParamClassBuilder_ == null) {
-        metaParamClass_ = builderForValue.build();
-        onChanged();
-      } else {
-        metaParamClassBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
-     */
-    public Builder mergeMetaParamClass(com.google.protobuf.Any value) {
-      if (metaParamClassBuilder_ == null) {
-        if (metaParamClass_ != null) {
-          metaParamClass_ =
-            com.google.protobuf.Any.newBuilder(metaParamClass_).mergeFrom(value).buildPartial();
-        } else {
-          metaParamClass_ = value;
-        }
-        onChanged();
-      } else {
-        metaParamClassBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
+     * <code>optional bytes metaParamClass = 3;</code>
      */
     public Builder clearMetaParamClass() {
-      if (metaParamClassBuilder_ == null) {
-        metaParamClass_ = null;
-        onChanged();
-      } else {
-        metaParamClass_ = null;
-        metaParamClassBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
-     */
-    public com.google.protobuf.Any.Builder getMetaParamClassBuilder() {
-      
+      bitField0_ = (bitField0_ & ~0x00000004);
+      metaParamClass_ = getDefaultInstance().getMetaParamClass();
       onChanged();
-      return getMetaParamClassFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
-     */
-    public com.google.protobuf.AnyOrBuilder getMetaParamClassOrBuilder() {
-      if (metaParamClassBuilder_ != null) {
-        return metaParamClassBuilder_.getMessageOrBuilder();
-      } else {
-        return metaParamClass_ == null ?
-            com.google.protobuf.Any.getDefaultInstance() : metaParamClass_;
-      }
-    }
-    /**
-     * <code>.google.protobuf.Any metaParamClass = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
-        getMetaParamClassFieldBuilder() {
-      if (metaParamClassBuilder_ == null) {
-        metaParamClassBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                getMetaParamClass(),
-                getParentForChildren(),
-                isClean());
-        metaParamClass_ = null;
-      }
-      return metaParamClassBuilder_;
-    }
-    public final Builder setUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
       return this;
     }
-
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return this;
-    }
-
 
     // @@protoc_insertion_point(builder_scope:dconcurrent.DObject)
   }
 
-  // @@protoc_insertion_point(class_scope:dconcurrent.DObject)
-  private static final DObject DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new DObject();
+    defaultInstance = new DObject(true);
+    defaultInstance.initFields();
   }
 
-  public static DObject getDefaultInstance() {
-    return DEFAULT_INSTANCE;
-  }
-
-  private static final com.google.protobuf.Parser<DObject>
-      PARSER = new com.google.protobuf.AbstractParser<DObject>() {
-    public DObject parsePartialFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DObject(input, extensionRegistry);
-    }
-  };
-
-  public static com.google.protobuf.Parser<DObject> parser() {
-    return PARSER;
-  }
-
-  @Override
-  public com.google.protobuf.Parser<DObject> getParserForType() {
-    return PARSER;
-  }
-
-  public DObject getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
-  }
-
+  // @@protoc_insertion_point(class_scope:dconcurrent.DObject)
 }
 

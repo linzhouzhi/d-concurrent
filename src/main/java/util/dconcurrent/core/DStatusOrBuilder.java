@@ -3,17 +3,26 @@
 
 package util.dconcurrent.core;
 
-public interface DStatusOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:dconcurrent.DStatus)
-    com.google.protobuf.MessageOrBuilder {
+public interface DStatusOrBuilder
+    extends com.google.protobuf.MessageOrBuilder {
 
+  // optional int32 runCount = 1;
   /**
-   * <code>int32 runCount = 1;</code>
+   * <code>optional int32 runCount = 1;</code>
+   */
+  boolean hasRunCount();
+  /**
+   * <code>optional int32 runCount = 1;</code>
    */
   int getRunCount();
 
+  // optional int32 callCount = 2;
   /**
-   * <code>int32 callCount = 2;</code>
+   * <code>optional int32 callCount = 2;</code>
+   */
+  boolean hasCallCount();
+  /**
+   * <code>optional int32 callCount = 2;</code>
    */
   int getCallCount();
 }

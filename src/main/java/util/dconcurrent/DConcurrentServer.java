@@ -1,9 +1,9 @@
 package util.dconcurrent;
 
-import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import util.dconcurrent.core.DBytes;
 import util.dconcurrent.core.DConcurrentServerGrpc;
 import util.dconcurrent.core.DObject;
 import util.dconcurrent.core.DStatus;
@@ -80,13 +80,13 @@ public class DConcurrentServer {
     // 实现 定义一个实现服务接口的类
     private class DoncurrentImpl extends DConcurrentServerGrpc.DConcurrentServerImplBase {
         @Override
-        public void run(DObject request, StreamObserver<DObject> responseObserver) {
+        public void run(DObject request, StreamObserver<DBytes> responseObserver) {
             runCount++;
-            final Any classNameObj = request.getClassName();
-            final Any metaParam = request.getMetaParam();
-            final Any metaParamClass = request.getMetaParamClass();
+            final ByteString classNameObj = request.getClassName();
+            final ByteString metaParam = request.getMetaParam();
+            final ByteString metaParamClass = request.getMetaParamClass();
             try {
-                Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+                Class<?> runClass = Class.forName( classNameObj.toStringUtf8() );
                 Object runObject = getRunObject(classNameObj, metaParam, metaParamClass);
                 Method runMethod = runClass.getDeclaredMethod( "run" );
                 runMethod.setAccessible( true );
@@ -97,14 +97,14 @@ public class DConcurrentServer {
         }
 
         @Override
-        public void call(DObject request, StreamObserver<DObject> responseObserver){
+        public void call(DObject request, StreamObserver<DBytes> responseObserver){
             callCount++;
-            final Any classNameObj = request.getClassName();
-            final Any metaParam = request.getMetaParam();
-            final Any metaParamClass = request.getMetaParamClass();
+            final ByteString classNameObj = request.getClassName();
+            final ByteString metaParam = request.getMetaParam();
+            final ByteString metaParamClass = request.getMetaParamClass();
             byte[] result = null;
             try {
-                Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+                Class<?> runClass = Class.forName( classNameObj.toStringUtf8() );
                 Object runObject = getRunObject(classNameObj, metaParam, metaParamClass);
                 Method runMethod = runClass.getSuperclass().getDeclaredMethod( "remoteCall" );
                 runMethod.setAccessible( true );
@@ -113,29 +113,29 @@ public class DConcurrentServer {
                 e.printStackTrace();
             }
 
-            Any resultAny = Any.newBuilder().setValue( ByteString.copyFrom( result ) ).build();
-            DObject reply = DObject.newBuilder().setClassName( resultAny ).build();
+            ByteString resultAny = ByteString.copyFrom(result);
+            DBytes reply = DBytes.newBuilder().setRes(resultAny).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();
         }
 
         @Override
-        public void getStat(Any request, StreamObserver<DStatus> responseObserver) {
+        public void getStat(DBytes request, StreamObserver<DStatus> responseObserver) {
             DStatus reply = DStatus.newBuilder().setRunCount( runCount ).setCallCount( callCount ).build();
             responseObserver.onNext( reply );
             responseObserver.onCompleted();
         }
     }
 
-    private Object getRunObject(Any classNameObj, Any metaParam, Any metaParamClass) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Class<?> runClass = Class.forName( classNameObj.getValue().toStringUtf8() );
+    private Object getRunObject(ByteString classNameObj, ByteString metaParam, ByteString metaParamClass) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class<?> runClass = Class.forName( classNameObj.toStringUtf8() );
         Object runObject;
-        ByteString paramClassByte = metaParamClass.getValue();
+        ByteString paramClassByte = metaParamClass;
         if( paramClassByte.size() != 0 ){
             Class<?> paramClass = Class.forName(paramClassByte.toStringUtf8());
             Constructor constructorObj = runClass.getConstructor( paramClass ); //DmetaParam.class
             constructorObj.setAccessible(true);
-            Object metaObject = ByteTransform.unSerialized(metaParam.getValue().toStringUtf8(), paramClass);
+            Object metaObject = ByteTransform.unSerialized(metaParam.toStringUtf8(), paramClass);
             runObject = constructorObj.newInstance( metaObject );
         }else{
             //测试用例会默认传递一个参数进来

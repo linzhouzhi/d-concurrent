@@ -1,12 +1,13 @@
 package util.dconcurrent;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import util.dconcurrent.core.DObject;
+import util.dconcurrent.core.DBytes;
 import util.dconcurrent.strategy.FailStrategy;
 import util.dconcurrent.strategy.FixStrategy;
 import util.dconcurrent.strategy.RandomStrategy;
 import util.dconcurrent.util.HostAndPort;
 import util.dconcurrent.util.NetUtil;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -113,7 +114,7 @@ public class DExecutors {
         DmetaParam dmetaParam = getDmetaParam(fields, callable);
         byte[] metaParam = dmetaParam == null ? null : dmetaParam.serialized();
         byte[] metaParamClass = dmetaParam == null ? null : dmetaParam.getClass().getName().getBytes();
-        ListenableFuture<DObject> future = dclient(balanceKey).call(className, metaParam, metaParamClass);
+        ListenableFuture<DBytes> future = dclient(balanceKey).call(className, metaParam, metaParamClass);
         DFuture dfuture = new DFuture(future, returnType);
         return dfuture;
     }

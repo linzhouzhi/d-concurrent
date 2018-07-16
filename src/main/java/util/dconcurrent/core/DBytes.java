@@ -4,24 +4,24 @@
 package util.dconcurrent.core;
 
 /**
- * Protobuf type {@code dconcurrent.DStatus}
+ * Protobuf type {@code dconcurrent.DBytes}
  */
-public  final class DStatus extends
+public  final class DBytes extends
     com.google.protobuf.GeneratedMessage
-    implements DStatusOrBuilder {
-  // Use DStatus.newBuilder() to construct.
-  private DStatus(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+    implements DBytesOrBuilder {
+  // Use DBytes.newBuilder() to construct.
+  private DBytes(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
     super(builder);
     this.unknownFields = builder.getUnknownFields();
   }
-  private DStatus(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+  private DBytes(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-  private static final DStatus defaultInstance;
-  public static DStatus getDefaultInstance() {
+  private static final DBytes defaultInstance;
+  public static DBytes getDefaultInstance() {
     return defaultInstance;
   }
 
-  public DStatus getDefaultInstanceForType() {
+  public DBytes getDefaultInstanceForType() {
     return defaultInstance;
   }
 
@@ -31,7 +31,7 @@ public  final class DStatus extends
       getUnknownFields() {
     return this.unknownFields;
   }
-  private DStatus(
+  private DBytes(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -54,14 +54,9 @@ public  final class DStatus extends
             }
             break;
           }
-          case 8: {
+          case 10: {
             bitField0_ |= 0x00000001;
-            runCount_ = input.readInt32();
-            break;
-          }
-          case 16: {
-            bitField0_ |= 0x00000002;
-            callCount_ = input.readInt32();
+            res_ = input.readBytes();
             break;
           }
         }
@@ -78,67 +73,50 @@ public  final class DStatus extends
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DStatus_descriptor;
+    return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DBytes_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DStatus_fieldAccessorTable
+    return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DBytes_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            util.dconcurrent.core.DStatus.class, util.dconcurrent.core.DStatus.Builder.class);
+            util.dconcurrent.core.DBytes.class, util.dconcurrent.core.DBytes.Builder.class);
   }
 
-  public static com.google.protobuf.Parser<DStatus> PARSER =
-      new com.google.protobuf.AbstractParser<DStatus>() {
-    public DStatus parsePartialFrom(
+  public static com.google.protobuf.Parser<DBytes> PARSER =
+      new com.google.protobuf.AbstractParser<DBytes>() {
+    public DBytes parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new DStatus(input, extensionRegistry);
+      return new DBytes(input, extensionRegistry);
     }
   };
 
   @java.lang.Override
-  public com.google.protobuf.Parser<DStatus> getParserForType() {
+  public com.google.protobuf.Parser<DBytes> getParserForType() {
     return PARSER;
   }
 
   private int bitField0_;
-  // optional int32 runCount = 1;
-  public static final int RUNCOUNT_FIELD_NUMBER = 1;
-  private int runCount_;
+  // optional bytes res = 1;
+  public static final int RES_FIELD_NUMBER = 1;
+  private com.google.protobuf.ByteString res_;
   /**
-   * <code>optional int32 runCount = 1;</code>
+   * <code>optional bytes res = 1;</code>
    */
-  public boolean hasRunCount() {
+  public boolean hasRes() {
     return ((bitField0_ & 0x00000001) == 0x00000001);
   }
   /**
-   * <code>optional int32 runCount = 1;</code>
+   * <code>optional bytes res = 1;</code>
    */
-  public int getRunCount() {
-    return runCount_;
-  }
-
-  // optional int32 callCount = 2;
-  public static final int CALLCOUNT_FIELD_NUMBER = 2;
-  private int callCount_;
-  /**
-   * <code>optional int32 callCount = 2;</code>
-   */
-  public boolean hasCallCount() {
-    return ((bitField0_ & 0x00000002) == 0x00000002);
-  }
-  /**
-   * <code>optional int32 callCount = 2;</code>
-   */
-  public int getCallCount() {
-    return callCount_;
+  public com.google.protobuf.ByteString getRes() {
+    return res_;
   }
 
   private void initFields() {
-    runCount_ = 0;
-    callCount_ = 0;
+    res_ = com.google.protobuf.ByteString.EMPTY;
   }
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
@@ -153,10 +131,7 @@ public  final class DStatus extends
                       throws java.io.IOException {
     getSerializedSize();
     if (((bitField0_ & 0x00000001) == 0x00000001)) {
-      output.writeInt32(1, runCount_);
-    }
-    if (((bitField0_ & 0x00000002) == 0x00000002)) {
-      output.writeInt32(2, callCount_);
+      output.writeBytes(1, res_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -169,11 +144,7 @@ public  final class DStatus extends
     size = 0;
     if (((bitField0_ & 0x00000001) == 0x00000001)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, runCount_);
-    }
-    if (((bitField0_ & 0x00000002) == 0x00000002)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, callCount_);
+        .computeBytesSize(1, res_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSerializedSize = size;
@@ -187,53 +158,53 @@ public  final class DStatus extends
     return super.writeReplace();
   }
 
-  public static util.dconcurrent.core.DStatus parseFrom(
+  public static util.dconcurrent.core.DBytes parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(
+  public static util.dconcurrent.core.DBytes parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(byte[] data)
+  public static util.dconcurrent.core.DBytes parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(
+  public static util.dconcurrent.core.DBytes parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(java.io.InputStream input)
+  public static util.dconcurrent.core.DBytes parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return PARSER.parseFrom(input);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(
+  public static util.dconcurrent.core.DBytes parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return PARSER.parseFrom(input, extensionRegistry);
   }
-  public static util.dconcurrent.core.DStatus parseDelimitedFrom(java.io.InputStream input)
+  public static util.dconcurrent.core.DBytes parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return PARSER.parseDelimitedFrom(input);
   }
-  public static util.dconcurrent.core.DStatus parseDelimitedFrom(
+  public static util.dconcurrent.core.DBytes parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return PARSER.parseDelimitedFrom(input, extensionRegistry);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(
+  public static util.dconcurrent.core.DBytes parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return PARSER.parseFrom(input);
   }
-  public static util.dconcurrent.core.DStatus parseFrom(
+  public static util.dconcurrent.core.DBytes parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -242,7 +213,7 @@ public  final class DStatus extends
 
   public static Builder newBuilder() { return Builder.create(); }
   public Builder newBuilderForType() { return newBuilder(); }
-  public static Builder newBuilder(util.dconcurrent.core.DStatus prototype) {
+  public static Builder newBuilder(util.dconcurrent.core.DBytes prototype) {
     return newBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() { return newBuilder(this); }
@@ -254,24 +225,24 @@ public  final class DStatus extends
     return builder;
   }
   /**
-   * Protobuf type {@code dconcurrent.DStatus}
+   * Protobuf type {@code dconcurrent.DBytes}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder>
-     implements util.dconcurrent.core.DStatusOrBuilder {
+     implements util.dconcurrent.core.DBytesOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DStatus_descriptor;
+      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DBytes_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DStatus_fieldAccessorTable
+      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DBytes_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              util.dconcurrent.core.DStatus.class, util.dconcurrent.core.DStatus.Builder.class);
+              util.dconcurrent.core.DBytes.class, util.dconcurrent.core.DBytes.Builder.class);
     }
 
-    // Construct using util.dconcurrent.core.DStatus.newBuilder()
+    // Construct using util.dconcurrent.core.DBytes.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -291,10 +262,8 @@ public  final class DStatus extends
 
     public Builder clear() {
       super.clear();
-      runCount_ = 0;
+      res_ = com.google.protobuf.ByteString.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
-      callCount_ = 0;
-      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -304,54 +273,47 @@ public  final class DStatus extends
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DStatus_descriptor;
+      return util.dconcurrent.core.DConcurrent.internal_static_dconcurrent_DBytes_descriptor;
     }
 
-    public util.dconcurrent.core.DStatus getDefaultInstanceForType() {
-      return util.dconcurrent.core.DStatus.getDefaultInstance();
+    public util.dconcurrent.core.DBytes getDefaultInstanceForType() {
+      return util.dconcurrent.core.DBytes.getDefaultInstance();
     }
 
-    public util.dconcurrent.core.DStatus build() {
-      util.dconcurrent.core.DStatus result = buildPartial();
+    public util.dconcurrent.core.DBytes build() {
+      util.dconcurrent.core.DBytes result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public util.dconcurrent.core.DStatus buildPartial() {
-      util.dconcurrent.core.DStatus result = new util.dconcurrent.core.DStatus(this);
+    public util.dconcurrent.core.DBytes buildPartial() {
+      util.dconcurrent.core.DBytes result = new util.dconcurrent.core.DBytes(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
         to_bitField0_ |= 0x00000001;
       }
-      result.runCount_ = runCount_;
-      if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-        to_bitField0_ |= 0x00000002;
-      }
-      result.callCount_ = callCount_;
+      result.res_ = res_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
 
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof util.dconcurrent.core.DStatus) {
-        return mergeFrom((util.dconcurrent.core.DStatus)other);
+      if (other instanceof util.dconcurrent.core.DBytes) {
+        return mergeFrom((util.dconcurrent.core.DBytes)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(util.dconcurrent.core.DStatus other) {
-      if (other == util.dconcurrent.core.DStatus.getDefaultInstance()) return this;
-      if (other.hasRunCount()) {
-        setRunCount(other.getRunCount());
-      }
-      if (other.hasCallCount()) {
-        setCallCount(other.getCallCount());
+    public Builder mergeFrom(util.dconcurrent.core.DBytes other) {
+      if (other == util.dconcurrent.core.DBytes.getDefaultInstance()) return this;
+      if (other.hasRes()) {
+        setRes(other.getRes());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       return this;
@@ -365,11 +327,11 @@ public  final class DStatus extends
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      util.dconcurrent.core.DStatus parsedMessage = null;
+      util.dconcurrent.core.DBytes parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (util.dconcurrent.core.DStatus) e.getUnfinishedMessage();
+        parsedMessage = (util.dconcurrent.core.DBytes) e.getUnfinishedMessage();
         throw e;
       } finally {
         if (parsedMessage != null) {
@@ -380,80 +342,50 @@ public  final class DStatus extends
     }
     private int bitField0_;
 
-    // optional int32 runCount = 1;
-    private int runCount_ ;
+    // optional bytes res = 1;
+    private com.google.protobuf.ByteString res_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>optional int32 runCount = 1;</code>
+     * <code>optional bytes res = 1;</code>
      */
-    public boolean hasRunCount() {
+    public boolean hasRes() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>optional int32 runCount = 1;</code>
+     * <code>optional bytes res = 1;</code>
      */
-    public int getRunCount() {
-      return runCount_;
+    public com.google.protobuf.ByteString getRes() {
+      return res_;
     }
     /**
-     * <code>optional int32 runCount = 1;</code>
+     * <code>optional bytes res = 1;</code>
      */
-    public Builder setRunCount(int value) {
-      bitField0_ |= 0x00000001;
-      runCount_ = value;
+    public Builder setRes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+      res_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>optional int32 runCount = 1;</code>
+     * <code>optional bytes res = 1;</code>
      */
-    public Builder clearRunCount() {
+    public Builder clearRes() {
       bitField0_ = (bitField0_ & ~0x00000001);
-      runCount_ = 0;
+      res_ = getDefaultInstance().getRes();
       onChanged();
       return this;
     }
 
-    // optional int32 callCount = 2;
-    private int callCount_ ;
-    /**
-     * <code>optional int32 callCount = 2;</code>
-     */
-    public boolean hasCallCount() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>optional int32 callCount = 2;</code>
-     */
-    public int getCallCount() {
-      return callCount_;
-    }
-    /**
-     * <code>optional int32 callCount = 2;</code>
-     */
-    public Builder setCallCount(int value) {
-      bitField0_ |= 0x00000002;
-      callCount_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>optional int32 callCount = 2;</code>
-     */
-    public Builder clearCallCount() {
-      bitField0_ = (bitField0_ & ~0x00000002);
-      callCount_ = 0;
-      onChanged();
-      return this;
-    }
-
-    // @@protoc_insertion_point(builder_scope:dconcurrent.DStatus)
+    // @@protoc_insertion_point(builder_scope:dconcurrent.DBytes)
   }
 
   static {
-    defaultInstance = new DStatus(true);
+    defaultInstance = new DBytes(true);
     defaultInstance.initFields();
   }
 
-  // @@protoc_insertion_point(class_scope:dconcurrent.DStatus)
+  // @@protoc_insertion_point(class_scope:dconcurrent.DBytes)
 }
 

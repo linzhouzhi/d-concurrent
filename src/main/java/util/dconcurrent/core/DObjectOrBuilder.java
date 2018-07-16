@@ -3,46 +3,36 @@
 
 package util.dconcurrent.core;
 
-public interface DObjectOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:dconcurrent.DObject)
-    com.google.protobuf.MessageOrBuilder {
+public interface DObjectOrBuilder
+    extends com.google.protobuf.MessageOrBuilder {
 
+  // optional bytes className = 1;
   /**
-   * <code>.google.protobuf.Any className = 1;</code>
+   * <code>optional bytes className = 1;</code>
    */
   boolean hasClassName();
   /**
-   * <code>.google.protobuf.Any className = 1;</code>
+   * <code>optional bytes className = 1;</code>
    */
-  com.google.protobuf.Any getClassName();
-  /**
-   * <code>.google.protobuf.Any className = 1;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getClassNameOrBuilder();
+  com.google.protobuf.ByteString getClassName();
 
+  // optional bytes metaParam = 2;
   /**
-   * <code>.google.protobuf.Any metaParam = 2;</code>
+   * <code>optional bytes metaParam = 2;</code>
    */
   boolean hasMetaParam();
   /**
-   * <code>.google.protobuf.Any metaParam = 2;</code>
+   * <code>optional bytes metaParam = 2;</code>
    */
-  com.google.protobuf.Any getMetaParam();
-  /**
-   * <code>.google.protobuf.Any metaParam = 2;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getMetaParamOrBuilder();
+  com.google.protobuf.ByteString getMetaParam();
 
+  // optional bytes metaParamClass = 3;
   /**
-   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   * <code>optional bytes metaParamClass = 3;</code>
    */
   boolean hasMetaParamClass();
   /**
-   * <code>.google.protobuf.Any metaParamClass = 3;</code>
+   * <code>optional bytes metaParamClass = 3;</code>
    */
-  com.google.protobuf.Any getMetaParamClass();
-  /**
-   * <code>.google.protobuf.Any metaParamClass = 3;</code>
-   */
-  com.google.protobuf.AnyOrBuilder getMetaParamClassOrBuilder();
+  com.google.protobuf.ByteString getMetaParamClass();
 }

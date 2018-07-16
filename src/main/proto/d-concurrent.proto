@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+option java_multiple_files = true;
+option java_package = "util.dconcurrent.core";
+option java_outer_classname = "DConcurrent";
+
+package dconcurrent;
+
+service DConcurrentServer {
+  rpc ResetStat(DStatus) returns(DBytes) {}
+  rpc GetStat(DBytes) returns(DStatus) {}
+  rpc Run(DObject) returns(DBytes) {}
+  rpc Call(DObject) returns(DBytes) {}
+}
+message DObject{
+  optional bytes className = 1;
+  optional bytes metaParam = 2;
+  optional bytes metaParamClass = 3;
+}
+
+message DBytes{
+   optional bytes res = 1;
+}
+
+message DStatus{
+   optional int32 runCount = 1;
+   optional int32 callCount = 2;
+}

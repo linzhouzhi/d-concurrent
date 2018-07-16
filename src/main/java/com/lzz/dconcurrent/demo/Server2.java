@@ -4,13 +4,14 @@ import util.dconcurrent.DCallable;
 import util.dconcurrent.DExecutors;
 import util.dconcurrent.DFuture;
 import util.dconcurrent.util.HostAndPort;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by gl49 on 2018/7/4.
  */
-public class Server1 {
+public class Server2 {
     private static List list = new ArrayList();
     public static void main(String[] args) throws Exception {
         List<HostAndPort> hostAndPortList = new ArrayList<HostAndPort>();
@@ -19,7 +20,7 @@ public class Server1 {
         hostAndPortList.add( hostAndPort1 );
         hostAndPortList.add( hostAndPort2 );
 
-        DExecutors.serverStart( 50051 );
+        DExecutors.serverStart( 50052 );
         DExecutors client = DExecutors.newRandomDExecutor(hostAndPortList);
         while (true){
             if( !client.isLeader() ){

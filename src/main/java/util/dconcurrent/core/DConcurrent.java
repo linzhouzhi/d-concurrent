@@ -6,74 +6,75 @@ package util.dconcurrent.core;
 public final class DConcurrent {
   private DConcurrent() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  static final com.google.protobuf.Descriptors.Descriptor
+  static com.google.protobuf.Descriptors.Descriptor
     internal_static_dconcurrent_DObject_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_dconcurrent_DObject_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
+  static com.google.protobuf.Descriptors.Descriptor
+    internal_static_dconcurrent_DBytes_descriptor;
+  static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_dconcurrent_DBytes_fieldAccessorTable;
+  static com.google.protobuf.Descriptors.Descriptor
     internal_static_dconcurrent_DStatus_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_dconcurrent_DStatus_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    String[] descriptorData = {
-      "\n\022d-concurrent.proto\022\013dconcurrent\032\031googl" +
-      "e/protobuf/any.proto\"\211\001\n\007DObject\022\'\n\tclas" +
-      "sName\030\001 \001(\0132\024.google.protobuf.Any\022\'\n\tmet" +
-      "aParam\030\002 \001(\0132\024.google.protobuf.Any\022,\n\016me" +
-      "taParamClass\030\003 \001(\0132\024.google.protobuf.Any" +
-      "\".\n\007DStatus\022\020\n\010runCount\030\001 \001(\005\022\021\n\tcallCou" +
-      "nt\030\002 \001(\0052\362\001\n\021DConcurrentServer\0229\n\tResetS" +
-      "tat\022\024.dconcurrent.DStatus\032\024.google.proto" +
-      "buf.Any\"\000\0227\n\007GetStat\022\024.google.protobuf.A" +
-      "ny\032\024.dconcurrent.DStatus\"\000\0223\n\003Run\022\024.dcon",
-      "current.DObject\032\024.dconcurrent.DObject\"\000\022" +
-      "4\n\004Call\022\024.dconcurrent.DObject\032\024.dconcurr" +
-      "ent.DObject\"\000B)\n\022io.grpc.distributeB\013DCo" +
-      "ncurrentP\001\242\002\003LZZb\006proto3"
+    java.lang.String[] descriptorData = {
+      "\n\022d-concurrent.proto\022\013dconcurrent\"G\n\007DOb" +
+      "ject\022\021\n\tclassName\030\001 \001(\014\022\021\n\tmetaParam\030\002 \001" +
+      "(\014\022\026\n\016metaParamClass\030\003 \001(\014\"\025\n\006DBytes\022\013\n\003" +
+      "res\030\001 \001(\014\".\n\007DStatus\022\020\n\010runCount\030\001 \001(\005\022\021" +
+      "\n\tcallCount\030\002 \001(\0052\356\001\n\021DConcurrentServer\022" +
+      "8\n\tResetStat\022\024.dconcurrent.DStatus\032\023.dco" +
+      "ncurrent.DBytes\"\000\0226\n\007GetStat\022\023.dconcurre" +
+      "nt.DBytes\032\024.dconcurrent.DStatus\"\000\0222\n\003Run" +
+      "\022\024.dconcurrent.DObject\032\023.dconcurrent.DBy" +
+      "tes\"\000\0223\n\004Call\022\024.dconcurrent.DObject\032\023.dc",
+      "oncurrent.DBytes\"\000B&\n\025util.dconcurrent.c" +
+      "oreB\013DConcurrentP\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_dconcurrent_DObject_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_dconcurrent_DObject_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_dconcurrent_DObject_descriptor,
+              new java.lang.String[] { "ClassName", "MetaParam", "MetaParamClass", });
+          internal_static_dconcurrent_DBytes_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_dconcurrent_DBytes_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_dconcurrent_DBytes_descriptor,
+              new java.lang.String[] { "Res", });
+          internal_static_dconcurrent_DStatus_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_dconcurrent_DStatus_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_dconcurrent_DStatus_descriptor,
+              new java.lang.String[] { "RunCount", "CallCount", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.protobuf.AnyProto.getDescriptor(),
         }, assigner);
-    internal_static_dconcurrent_DObject_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_dconcurrent_DObject_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_dconcurrent_DObject_descriptor,
-        new String[] { "ClassName", "MetaParam", "MetaParamClass", });
-    internal_static_dconcurrent_DStatus_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_dconcurrent_DStatus_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_dconcurrent_DStatus_descriptor,
-        new String[] { "RunCount", "CallCount", });
-    com.google.protobuf.AnyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -1,11 +1,18 @@
 package util.dconcurrent.core;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
+import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
 import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
@@ -21,35 +28,35 @@ public final class DConcurrentServerGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @Deprecated // Use {@link #getResetStatMethod()} instead.
-  public static final io.grpc.MethodDescriptor<DStatus,
-      com.google.protobuf.Any> METHOD_RESET_STAT = getResetStatMethodHelper();
+  @java.lang.Deprecated // Use {@link #getResetStatMethod()} instead. 
+  public static final io.grpc.MethodDescriptor<util.dconcurrent.core.DStatus,
+      util.dconcurrent.core.DBytes> METHOD_RESET_STAT = getResetStatMethodHelper();
 
-  private static volatile io.grpc.MethodDescriptor<DStatus,
-      com.google.protobuf.Any> getResetStatMethod;
+  private static volatile io.grpc.MethodDescriptor<util.dconcurrent.core.DStatus,
+      util.dconcurrent.core.DBytes> getResetStatMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static io.grpc.MethodDescriptor<DStatus,
-      com.google.protobuf.Any> getResetStatMethod() {
+  public static io.grpc.MethodDescriptor<util.dconcurrent.core.DStatus,
+      util.dconcurrent.core.DBytes> getResetStatMethod() {
     return getResetStatMethodHelper();
   }
 
-  private static io.grpc.MethodDescriptor<DStatus,
-      com.google.protobuf.Any> getResetStatMethodHelper() {
-    io.grpc.MethodDescriptor<DStatus, com.google.protobuf.Any> getResetStatMethod;
+  private static io.grpc.MethodDescriptor<util.dconcurrent.core.DStatus,
+      util.dconcurrent.core.DBytes> getResetStatMethodHelper() {
+    io.grpc.MethodDescriptor<util.dconcurrent.core.DStatus, util.dconcurrent.core.DBytes> getResetStatMethod;
     if ((getResetStatMethod = DConcurrentServerGrpc.getResetStatMethod) == null) {
       synchronized (DConcurrentServerGrpc.class) {
         if ((getResetStatMethod = DConcurrentServerGrpc.getResetStatMethod) == null) {
           DConcurrentServerGrpc.getResetStatMethod = getResetStatMethod = 
-              io.grpc.MethodDescriptor.<DStatus, com.google.protobuf.Any>newBuilder()
+              io.grpc.MethodDescriptor.<util.dconcurrent.core.DStatus, util.dconcurrent.core.DBytes>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "dconcurrent.DConcurrentServer", "ResetStat"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DStatus.getDefaultInstance()))
+                  util.dconcurrent.core.DStatus.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Any.getDefaultInstance()))
+                  util.dconcurrent.core.DBytes.getDefaultInstance()))
                   .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("ResetStat"))
                   .build();
           }
@@ -58,35 +65,35 @@ public final class DConcurrentServerGrpc {
      return getResetStatMethod;
   }
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @Deprecated // Use {@link #getGetStatMethod()} instead.
-  public static final io.grpc.MethodDescriptor<com.google.protobuf.Any,
-      DStatus> METHOD_GET_STAT = getGetStatMethodHelper();
+  @java.lang.Deprecated // Use {@link #getGetStatMethod()} instead. 
+  public static final io.grpc.MethodDescriptor<util.dconcurrent.core.DBytes,
+      util.dconcurrent.core.DStatus> METHOD_GET_STAT = getGetStatMethodHelper();
 
-  private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Any,
-      DStatus> getGetStatMethod;
+  private static volatile io.grpc.MethodDescriptor<util.dconcurrent.core.DBytes,
+      util.dconcurrent.core.DStatus> getGetStatMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static io.grpc.MethodDescriptor<com.google.protobuf.Any,
-      DStatus> getGetStatMethod() {
+  public static io.grpc.MethodDescriptor<util.dconcurrent.core.DBytes,
+      util.dconcurrent.core.DStatus> getGetStatMethod() {
     return getGetStatMethodHelper();
   }
 
-  private static io.grpc.MethodDescriptor<com.google.protobuf.Any,
-      DStatus> getGetStatMethodHelper() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Any, DStatus> getGetStatMethod;
+  private static io.grpc.MethodDescriptor<util.dconcurrent.core.DBytes,
+      util.dconcurrent.core.DStatus> getGetStatMethodHelper() {
+    io.grpc.MethodDescriptor<util.dconcurrent.core.DBytes, util.dconcurrent.core.DStatus> getGetStatMethod;
     if ((getGetStatMethod = DConcurrentServerGrpc.getGetStatMethod) == null) {
       synchronized (DConcurrentServerGrpc.class) {
         if ((getGetStatMethod = DConcurrentServerGrpc.getGetStatMethod) == null) {
           DConcurrentServerGrpc.getGetStatMethod = getGetStatMethod = 
-              io.grpc.MethodDescriptor.<com.google.protobuf.Any, DStatus>newBuilder()
+              io.grpc.MethodDescriptor.<util.dconcurrent.core.DBytes, util.dconcurrent.core.DStatus>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "dconcurrent.DConcurrentServer", "GetStat"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Any.getDefaultInstance()))
+                  util.dconcurrent.core.DBytes.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DStatus.getDefaultInstance()))
+                  util.dconcurrent.core.DStatus.getDefaultInstance()))
                   .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("GetStat"))
                   .build();
           }
@@ -95,35 +102,35 @@ public final class DConcurrentServerGrpc {
      return getGetStatMethod;
   }
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @Deprecated // Use {@link #getRunMethod()} instead.
-  public static final io.grpc.MethodDescriptor<DObject,
-      DObject> METHOD_RUN = getRunMethodHelper();
+  @java.lang.Deprecated // Use {@link #getRunMethod()} instead. 
+  public static final io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> METHOD_RUN = getRunMethodHelper();
 
-  private static volatile io.grpc.MethodDescriptor<DObject,
-      DObject> getRunMethod;
+  private static volatile io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> getRunMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static io.grpc.MethodDescriptor<DObject,
-      DObject> getRunMethod() {
+  public static io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> getRunMethod() {
     return getRunMethodHelper();
   }
 
-  private static io.grpc.MethodDescriptor<DObject,
-      DObject> getRunMethodHelper() {
-    io.grpc.MethodDescriptor<DObject, DObject> getRunMethod;
+  private static io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> getRunMethodHelper() {
+    io.grpc.MethodDescriptor<util.dconcurrent.core.DObject, util.dconcurrent.core.DBytes> getRunMethod;
     if ((getRunMethod = DConcurrentServerGrpc.getRunMethod) == null) {
       synchronized (DConcurrentServerGrpc.class) {
         if ((getRunMethod = DConcurrentServerGrpc.getRunMethod) == null) {
           DConcurrentServerGrpc.getRunMethod = getRunMethod = 
-              io.grpc.MethodDescriptor.<DObject, DObject>newBuilder()
+              io.grpc.MethodDescriptor.<util.dconcurrent.core.DObject, util.dconcurrent.core.DBytes>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "dconcurrent.DConcurrentServer", "Run"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DObject.getDefaultInstance()))
+                  util.dconcurrent.core.DObject.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DObject.getDefaultInstance()))
+                  util.dconcurrent.core.DBytes.getDefaultInstance()))
                   .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("Run"))
                   .build();
           }
@@ -132,35 +139,35 @@ public final class DConcurrentServerGrpc {
      return getRunMethod;
   }
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @Deprecated // Use {@link #getCallMethod()} instead.
-  public static final io.grpc.MethodDescriptor<DObject,
-      DObject> METHOD_CALL = getCallMethodHelper();
+  @java.lang.Deprecated // Use {@link #getCallMethod()} instead. 
+  public static final io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> METHOD_CALL = getCallMethodHelper();
 
-  private static volatile io.grpc.MethodDescriptor<DObject,
-      DObject> getCallMethod;
+  private static volatile io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> getCallMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static io.grpc.MethodDescriptor<DObject,
-      DObject> getCallMethod() {
+  public static io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> getCallMethod() {
     return getCallMethodHelper();
   }
 
-  private static io.grpc.MethodDescriptor<DObject,
-      DObject> getCallMethodHelper() {
-    io.grpc.MethodDescriptor<DObject, DObject> getCallMethod;
+  private static io.grpc.MethodDescriptor<util.dconcurrent.core.DObject,
+      util.dconcurrent.core.DBytes> getCallMethodHelper() {
+    io.grpc.MethodDescriptor<util.dconcurrent.core.DObject, util.dconcurrent.core.DBytes> getCallMethod;
     if ((getCallMethod = DConcurrentServerGrpc.getCallMethod) == null) {
       synchronized (DConcurrentServerGrpc.class) {
         if ((getCallMethod = DConcurrentServerGrpc.getCallMethod) == null) {
           DConcurrentServerGrpc.getCallMethod = getCallMethod = 
-              io.grpc.MethodDescriptor.<DObject, DObject>newBuilder()
+              io.grpc.MethodDescriptor.<util.dconcurrent.core.DObject, util.dconcurrent.core.DBytes>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "dconcurrent.DConcurrentServer", "Call"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DObject.getDefaultInstance()))
+                  util.dconcurrent.core.DObject.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  DObject.getDefaultInstance()))
+                  util.dconcurrent.core.DBytes.getDefaultInstance()))
                   .setSchemaDescriptor(new DConcurrentServerMethodDescriptorSupplier("Call"))
                   .build();
           }
@@ -198,61 +205,61 @@ public final class DConcurrentServerGrpc {
 
     /**
      */
-    public void resetStat(DStatus request,
-        io.grpc.stub.StreamObserver<com.google.protobuf.Any> responseObserver) {
+    public void resetStat(util.dconcurrent.core.DStatus request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes> responseObserver) {
       asyncUnimplementedUnaryCall(getResetStatMethodHelper(), responseObserver);
     }
 
     /**
      */
-    public void getStat(com.google.protobuf.Any request,
-        io.grpc.stub.StreamObserver<DStatus> responseObserver) {
+    public void getStat(util.dconcurrent.core.DBytes request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DStatus> responseObserver) {
       asyncUnimplementedUnaryCall(getGetStatMethodHelper(), responseObserver);
     }
 
     /**
      */
-    public void run(DObject request,
-        io.grpc.stub.StreamObserver<DObject> responseObserver) {
+    public void run(util.dconcurrent.core.DObject request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes> responseObserver) {
       asyncUnimplementedUnaryCall(getRunMethodHelper(), responseObserver);
     }
 
     /**
      */
-    public void call(DObject request,
-        io.grpc.stub.StreamObserver<DObject> responseObserver) {
+    public void call(util.dconcurrent.core.DObject request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes> responseObserver) {
       asyncUnimplementedUnaryCall(getCallMethodHelper(), responseObserver);
     }
 
-    @Override public final io.grpc.ServerServiceDefinition bindService() {
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getResetStatMethodHelper(),
             asyncUnaryCall(
               new MethodHandlers<
-                DStatus,
-                com.google.protobuf.Any>(
+                util.dconcurrent.core.DStatus,
+                util.dconcurrent.core.DBytes>(
                   this, METHODID_RESET_STAT)))
           .addMethod(
             getGetStatMethodHelper(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.google.protobuf.Any,
-                DStatus>(
+                util.dconcurrent.core.DBytes,
+                util.dconcurrent.core.DStatus>(
                   this, METHODID_GET_STAT)))
           .addMethod(
             getRunMethodHelper(),
             asyncUnaryCall(
               new MethodHandlers<
-                DObject,
-                DObject>(
+                util.dconcurrent.core.DObject,
+                util.dconcurrent.core.DBytes>(
                   this, METHODID_RUN)))
           .addMethod(
             getCallMethodHelper(),
             asyncUnaryCall(
               new MethodHandlers<
-                DObject,
-                DObject>(
+                util.dconcurrent.core.DObject,
+                util.dconcurrent.core.DBytes>(
                   this, METHODID_CALL)))
           .build();
     }
@@ -270,7 +277,7 @@ public final class DConcurrentServerGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected DConcurrentServerStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new DConcurrentServerStub(channel, callOptions);
@@ -278,32 +285,32 @@ public final class DConcurrentServerGrpc {
 
     /**
      */
-    public void resetStat(DStatus request,
-        io.grpc.stub.StreamObserver<com.google.protobuf.Any> responseObserver) {
+    public void resetStat(util.dconcurrent.core.DStatus request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getResetStatMethodHelper(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void getStat(com.google.protobuf.Any request,
-        io.grpc.stub.StreamObserver<DStatus> responseObserver) {
+    public void getStat(util.dconcurrent.core.DBytes request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DStatus> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetStatMethodHelper(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void run(DObject request,
-        io.grpc.stub.StreamObserver<DObject> responseObserver) {
+    public void run(util.dconcurrent.core.DObject request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getRunMethodHelper(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void call(DObject request,
-        io.grpc.stub.StreamObserver<DObject> responseObserver) {
+    public void call(util.dconcurrent.core.DObject request,
+        io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getCallMethodHelper(), getCallOptions()), request, responseObserver);
     }
@@ -321,7 +328,7 @@ public final class DConcurrentServerGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected DConcurrentServerBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new DConcurrentServerBlockingStub(channel, callOptions);
@@ -329,28 +336,28 @@ public final class DConcurrentServerGrpc {
 
     /**
      */
-    public com.google.protobuf.Any resetStat(DStatus request) {
+    public util.dconcurrent.core.DBytes resetStat(util.dconcurrent.core.DStatus request) {
       return blockingUnaryCall(
           getChannel(), getResetStatMethodHelper(), getCallOptions(), request);
     }
 
     /**
      */
-    public DStatus getStat(com.google.protobuf.Any request) {
+    public util.dconcurrent.core.DStatus getStat(util.dconcurrent.core.DBytes request) {
       return blockingUnaryCall(
           getChannel(), getGetStatMethodHelper(), getCallOptions(), request);
     }
 
     /**
      */
-    public DObject run(DObject request) {
+    public util.dconcurrent.core.DBytes run(util.dconcurrent.core.DObject request) {
       return blockingUnaryCall(
           getChannel(), getRunMethodHelper(), getCallOptions(), request);
     }
 
     /**
      */
-    public DObject call(DObject request) {
+    public util.dconcurrent.core.DBytes call(util.dconcurrent.core.DObject request) {
       return blockingUnaryCall(
           getChannel(), getCallMethodHelper(), getCallOptions(), request);
     }
@@ -368,7 +375,7 @@ public final class DConcurrentServerGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected DConcurrentServerFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new DConcurrentServerFutureStub(channel, callOptions);
@@ -376,32 +383,32 @@ public final class DConcurrentServerGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Any> resetStat(
-        DStatus request) {
+    public com.google.common.util.concurrent.ListenableFuture<util.dconcurrent.core.DBytes> resetStat(
+        util.dconcurrent.core.DStatus request) {
       return futureUnaryCall(
           getChannel().newCall(getResetStatMethodHelper(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<DStatus> getStat(
-        com.google.protobuf.Any request) {
+    public com.google.common.util.concurrent.ListenableFuture<util.dconcurrent.core.DStatus> getStat(
+        util.dconcurrent.core.DBytes request) {
       return futureUnaryCall(
           getChannel().newCall(getGetStatMethodHelper(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<DObject> run(
-        DObject request) {
+    public com.google.common.util.concurrent.ListenableFuture<util.dconcurrent.core.DBytes> run(
+        util.dconcurrent.core.DObject request) {
       return futureUnaryCall(
           getChannel().newCall(getRunMethodHelper(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<DObject> call(
-        DObject request) {
+    public com.google.common.util.concurrent.ListenableFuture<util.dconcurrent.core.DBytes> call(
+        util.dconcurrent.core.DObject request) {
       return futureUnaryCall(
           getChannel().newCall(getCallMethodHelper(), getCallOptions()), request);
     }
@@ -425,33 +432,33 @@ public final class DConcurrentServerGrpc {
       this.methodId = methodId;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_RESET_STAT:
-          serviceImpl.resetStat((DStatus) request,
-              (io.grpc.stub.StreamObserver<com.google.protobuf.Any>) responseObserver);
+          serviceImpl.resetStat((util.dconcurrent.core.DStatus) request,
+              (io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes>) responseObserver);
           break;
         case METHODID_GET_STAT:
-          serviceImpl.getStat((com.google.protobuf.Any) request,
-              (io.grpc.stub.StreamObserver<DStatus>) responseObserver);
+          serviceImpl.getStat((util.dconcurrent.core.DBytes) request,
+              (io.grpc.stub.StreamObserver<util.dconcurrent.core.DStatus>) responseObserver);
           break;
         case METHODID_RUN:
-          serviceImpl.run((DObject) request,
-              (io.grpc.stub.StreamObserver<DObject>) responseObserver);
+          serviceImpl.run((util.dconcurrent.core.DObject) request,
+              (io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes>) responseObserver);
           break;
         case METHODID_CALL:
-          serviceImpl.call((DObject) request,
-              (io.grpc.stub.StreamObserver<DObject>) responseObserver);
+          serviceImpl.call((util.dconcurrent.core.DObject) request,
+              (io.grpc.stub.StreamObserver<util.dconcurrent.core.DBytes>) responseObserver);
           break;
         default:
           throw new AssertionError();
       }
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
@@ -465,12 +472,12 @@ public final class DConcurrentServerGrpc {
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     DConcurrentServerBaseDescriptorSupplier() {}
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return DConcurrent.getDescriptor();
+      return util.dconcurrent.core.DConcurrent.getDescriptor();
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
       return getFileDescriptor().findServiceByName("DConcurrentServer");
     }
@@ -490,7 +497,7 @@ public final class DConcurrentServerGrpc {
       this.methodName = methodName;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
       return getServiceDescriptor().findMethodByName(methodName);
     }

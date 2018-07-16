@@ -15,6 +15,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty</artifactId>
             <version>${grpc.version}</version>
@@ -23,6 +29,12 @@
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
             <version>${grpc.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
@@ -39,6 +51,12 @@
             <groupId>com.google.api.grpc</groupId>
             <artifactId>proto-google-common-protos</artifactId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -69,7 +87,7 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.5.0</version>
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.5.1-1:exe:${os.detected.classifier}</protocArtifact>
+                    <protocArtifact>com.google.protobuf:protoc:2.5.0:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
                 </configuration>
