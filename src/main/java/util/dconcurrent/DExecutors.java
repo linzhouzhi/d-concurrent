@@ -174,7 +174,9 @@ public class DExecutors {
             }
             System.out.println("leader..................................." + localIp + ":" + this.serverPort + " is " + res);
             // 不是 leader 10 秒后再试，因为有可能是其它节点挂了
-            Thread.sleep(10000);
+            if( !res ){
+                Thread.sleep(10000);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
