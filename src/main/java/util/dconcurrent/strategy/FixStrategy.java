@@ -9,6 +9,7 @@ import java.util.*;
  * Created by lzz on 2018/7/5.
  */
 public class FixStrategy extends RandomStrategy implements BalanceStrategy {
+    //key 是 balanceKey， value 是 client
     private Map<String, Object> taskTable = new HashMap();
 
     @Override
@@ -21,8 +22,10 @@ public class FixStrategy extends RandomStrategy implements BalanceStrategy {
         }
         Object client = taskTable.get( balanceKey );
         Set listSet = new HashSet(list);
-        Set taskTableSet = new HashSet();
-        if( taskTable.values().isEmpty() ){
+        // 把 taskTable 中的所有 values 也是所有客户端赋值给 taskTableSet
+        Collection<Object> taskSets = taskTable.values();
+        Set taskTableSet = Sets.newHashSet( taskSets );
+        if( null == taskTableSet || taskTableSet.isEmpty() ){
             taskTableSet = new HashSet();
         }
         if( null ==  client ){

@@ -67,17 +67,21 @@ public class DExecutors {
         Thread checkClientThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                List<DConcurrentClient> tmpClients;
                 while (true){
                     try {
-                        activeClientList = new ArrayList();
+                        tmpClients = new ArrayList();
                         for(DConcurrentClient client : clientList){
                             if( checkService( client.hostAndPort ) ){
-                                activeClientList.add( client );
+                                tmpClients.add( client );
                             }
                         }
-                        if( activeClientList.size() < clientList.size()/(double)2 ){
+                        if( tmpClients.size() <= clientList.size()/(double)2 ){
                             activeClientList = new ArrayList();
                             System.out.println("dconcurrent without able client");
+                        }else{
+                            // 要一次性加，不然在判断的过程中 activeClientList 被其它线程引用判断会有错误
+                            activeClientList = tmpClients;
                         }
                         Thread.sleep(10000);
                     }catch (Exception ignore){
