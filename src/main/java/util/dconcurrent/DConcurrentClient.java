@@ -27,6 +27,9 @@ public class DConcurrentClient {
         channel = ManagedChannelBuilder.forAddress(hostAndPort.getIp(), hostAndPort.getPort())
                 .usePlaintext(true)
                 .keepAliveWithoutCalls(true)
+                .idleTimeout(30, TimeUnit.DAYS)
+                .keepAliveTime(30, TimeUnit.DAYS)
+                .keepAliveTimeout(1, TimeUnit.DAYS)
                 .build();
         futureStub = DConcurrentServerGrpc.newFutureStub(channel );
     }
